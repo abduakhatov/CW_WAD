@@ -1,14 +1,19 @@
 ﻿using Bmbox.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Bmbox.DAL.Repos
 {
-    class ProductRepo : AbsRepo<Product>
+    public class ProductRepo : AbsRepo<Product>
     {
+        public ProductRepo() : base()
+        {
+        }
+
         public override void Create(Product obj)
         {
             db.Products.Add(obj);
@@ -22,17 +27,28 @@ namespace Bmbox.DAL.Repos
 
         public override Product GetById(int i)
         {
-            throw new NotImplementedException();
+            Product p = db.Products.Find(i);
+            if (p == null) return null;
+            return p;
         }
 
-        public override void Remove(int i)
+        public override void Remove(int i) 
         {
-            throw new NotImplementedException();
+            db.Products.Remove(GetById(i));
+            db.SaveChanges();
         }
 
-        public override void Update(Product obj)
+        public override void Update(Product obj) 
         {
-            throw new NotImplementedException();
+            try
+            {
+                db.Entry(obj).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
