@@ -24,10 +24,16 @@ namespace bmbox_main.Controllers
         [HttpPost]
         public ActionResult Create(ProductViewModel m)
         {
-            var p = MapFromModel(m);
-            repo.Create(p);
-            return RedirectToAction("Index");
-
+            try
+            {
+                var p = MapFromModel(m);
+                repo.Create(p);
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
         }
 
         [HttpGet]
@@ -46,8 +52,19 @@ namespace bmbox_main.Controllers
         [HttpPost]
         public ActionResult Update(ProductViewModel p)
         {
-            repo.Update(MapFromModel(p));
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    repo.Update(MapFromModel(p));
+                    return RedirectToAction("Index");
+                }
+                catch (System.Exception)
+                {
+                    throw;
+                }
+            }
+            return View();
         }
 
         public ActionResult Delete(int id)

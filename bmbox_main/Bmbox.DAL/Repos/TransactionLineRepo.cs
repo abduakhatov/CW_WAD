@@ -1,32 +1,59 @@
 ﻿using Bmbox.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Bmbox.DAL.Repos
 {
-    class TransactionLineRepo : AbsRepo<TransactionLine>
+    public class TransactionLineRepo : AbsRepo<TransactionLine>
     {
+        public TransactionLineRepo() : base()
+        {
+
+        }
+
         public override void Create(TransactionLine obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                db.TransactionLines.Add(obj);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public override IQueryable<TransactionLine> GetAll()
         {
-            throw new NotImplementedException();
+            IQueryable<TransactionLine> res =
+                (from tl in db.TransactionLines
+                 join p in db.Products on tl.ProductId equals p.Id
+                 select tl
+                );
+            return res;
         }
 
         public override TransactionLine GetById(int i)
         {
-            throw new NotImplementedException();
+            return db.TransactionLines.Find(i);
         }
 
         public override void Remove(int i)
         {
-            throw new NotImplementedException();
+            try
+            {
+                db.TransactionLines.Remove(GetById(i));
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public override void Update(TransactionLine obj)

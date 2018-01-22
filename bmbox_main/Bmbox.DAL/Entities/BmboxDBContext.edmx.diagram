@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="eccf39723c124fd3b008e69fc39cfc64" Name="Diagram1">
-        <EntityTypeShape EntityType="BmboxDBModel.Product" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BmboxDBModel.Product" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BmboxDBModel.Transaction" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BmboxDBModel.TransactionLine" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BmboxDBModel.User" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />

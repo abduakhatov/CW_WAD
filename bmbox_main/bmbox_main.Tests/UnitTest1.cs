@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Bmbox.DAL.Repos;
+using Bmbox.DAL.Entities;
+using bmbox_main.Controllers;
 
 namespace bmbox_main.Tests
 {
@@ -9,6 +12,8 @@ namespace bmbox_main.Tests
         [TestMethod]
         public void TestMethod1()
         {
+
+
         }
     }
 }

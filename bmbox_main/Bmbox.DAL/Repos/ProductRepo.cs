@@ -16,8 +16,15 @@ namespace Bmbox.DAL.Repos
 
         public override void Create(Product obj)
         {
-            db.Products.Add(obj);
-            db.SaveChanges();
+            try
+            {
+                db.Products.Add(obj);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public override IQueryable<Product> GetAll()
@@ -35,6 +42,8 @@ namespace Bmbox.DAL.Repos
         public override void Remove(int i) 
         {
             db.Products.Remove(GetById(i));
+            //db.Products.Remove(db.Products.Where(id => id.Id == i);
+            //db.Products.
             db.SaveChanges();
         }
 
