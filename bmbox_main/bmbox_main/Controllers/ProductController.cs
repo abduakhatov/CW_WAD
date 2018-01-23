@@ -8,7 +8,7 @@ namespace bmbox_main.Controllers
 {
     public class ProductController : Controller
     {
-        AbsRepo<Product> repo = new ProductRepo();
+        private AbsRepo<Product> repo = new ProductRepo();
         // GET: Product
         public ActionResult Index()
         {

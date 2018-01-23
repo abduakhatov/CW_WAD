@@ -12,7 +12,7 @@ namespace bmbox_main.Controllers
 {
     public class TransactionController : Controller
     {
-        AbsRepo<Transaction> repo = new TransactionRepo();
+        private AbsRepo<Transaction> repo = new TransactionRepo();
         // GET: Transaction
         public ActionResult Index()
         {
