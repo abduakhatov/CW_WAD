@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BmboxDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BmboxDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
@@ -46,7 +46,6 @@
           <Property Name="Password" Type="nvarchar" MaxLength="70" Nullable="false" />
           <Property Name="ShippingAdress" Type="varchar" MaxLength="70" />
           <Property Name="UserRole" Type="nvarchar" MaxLength="15" Nullable="false" />
-          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <Association Name="FK_Transaction_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -102,7 +101,8 @@
             <End Role="TransactionLine" EntitySet="TransactionLine" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BmboxDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -153,7 +153,6 @@
           <Property Name="ShippingAdress" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
           <Property Name="UserRole" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_User" FromRole="User" ToRole="Transaction" />
-          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_TransactionLine_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
@@ -251,7 +250,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="BmboxDBModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

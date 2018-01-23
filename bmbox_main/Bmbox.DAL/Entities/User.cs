@@ -26,7 +26,6 @@ namespace Bmbox.DAL.Entities
         public string Password { get; set; }
         public string ShippingAdress { get; set; }
         public string UserRole { get; set; }
-        public string PasswordSalt { get; set; }
     
         public virtual ICollection<Transaction> Transactions { get; set; }
     }

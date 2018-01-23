@@ -1,43 +1,27 @@
 ﻿using Bmbox.DAL.Entities;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Bmbox.DAL.Repos
 {
-    public class UserRepo : AbsRepo<User>
+    class UserRepo : AbsRepo<User>
     {
-        public UserRepo() : base()
-        {
-
-        }
-
         public override void Create(User obj)
         {
-            try
-            {
-                db.Users.Add(obj);
-                db.SaveChanges();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
         public override IQueryable<User> GetAll()
         {
-            return db.Users;
+            throw new NotImplementedException();
         }
 
         public override User GetById(int i)
         {
-            User p = db.Users.Find(i);
-            if (p == null) return null;
-            return p;
+            throw new NotImplementedException();
         }
 
         public override void Remove(int i)
@@ -47,15 +31,7 @@ namespace Bmbox.DAL.Repos
 
         public override void Update(User obj)
         {
-            try
-            {
-                db.Entry(obj).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
     }
 }
