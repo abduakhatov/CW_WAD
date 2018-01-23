@@ -12,7 +12,7 @@ namespace bmbox_main.Controllers
 {
     public class TransactionController : Controller
     {
-        AbsRepo<Transaction> repo = new TransactionRepo();
+        private AbsRepo<Transaction> repo = new TransactionRepo();
         // GET: Transaction
         public ActionResult Index()
         {
@@ -114,7 +114,7 @@ namespace bmbox_main.Controllers
 }
 
 
- 
+
 /* DateTime d1 = DateTime.Today;
             long byDate = d1.Ticks;
             label1.Text = d1.ToString();

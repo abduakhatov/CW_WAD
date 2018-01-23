@@ -19,9 +19,9 @@ namespace Bmbox.DAL.Repos
         {
             //try
             //{
-                db.Users.Add(obj);
-                db.SaveChanges();
-            //}"ANau/1x0+tNhv7B2iLo6VFNOk7MMdDh+2sUmBwra9OuTLbFHcscrR9ckeClFg4FOyw=="
+            db.Users.Add(obj);
+            db.SaveChanges();
+            //}
             //catch (Exception)
             //{
             //    throw;
@@ -46,15 +46,14 @@ namespace Bmbox.DAL.Repos
             //db.Products.Remove(db.Products.Where(id => id.Id == i);
             //db.Products.
             db.SaveChanges();
-            //Shohruh	Abduakhatov	qwe@mail.ru	qweqweqwe	qweqwe
         }
 
         public override void Update(User obj)
         {
             //try
             //{
-                db.Entry(obj).State = EntityState.Modified;
-                db.SaveChanges();
+            db.Entry(obj).State = EntityState.Modified;
+            db.SaveChanges();
             //}
             //catch (Exception)
             //{
