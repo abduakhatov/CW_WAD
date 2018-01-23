@@ -7,7 +7,7 @@ namespace bmbox_main.Utils
 {
     public enum TransactionStatusEnum
     {
-        Processed,
+        Processed ,
         Processing
     }
 }
