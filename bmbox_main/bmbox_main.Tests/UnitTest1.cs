@@ -12,7 +12,10 @@ namespace bmbox_main.Tests
         [TestMethod]
         public void TestMethod1()
         {
-
+            SignUpInController c = new SignUpInController();
+            var pass = "hello";
+            var enc = c.EncryptPassword(pass);
+            Assert.IsTrue(c.UserExists(pass, enc));
 
         }
     }

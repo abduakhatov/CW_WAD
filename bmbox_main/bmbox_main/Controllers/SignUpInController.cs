@@ -17,7 +17,8 @@ namespace bmbox_main.Controllers
         // GET: SignInUp
         public ActionResult Index()
         {
-            return View(repo.GetAll().Select(MapToModel));
+            return View();
+           // return View(repo.GetAll().Select(MapToModel));
         }
 
         [HttpGet]
@@ -35,7 +36,7 @@ namespace bmbox_main.Controllers
             if (ModelState.IsValid)
             {
                 repo.Create(MapFromModel(model));
-                return RedirectToAction("Login");
+                return RedirectToAction("Index");
             }
             return View(model);
         }
@@ -72,7 +73,7 @@ namespace bmbox_main.Controllers
             };
         }
 
-        private string EncryptPassword(string password)
+        public string EncryptPassword(string password)
         {
             passwordSalt = Crypto.GenerateSalt();
             var hashedPassword = Crypto.HashPassword(Crypto.SHA256(password));
@@ -80,10 +81,11 @@ namespace bmbox_main.Controllers
             return hashedPassword;
         }
 
-        private string DencryptPassword(string password)
+
+        public bool UserExists(string pass, string hashPass)
         {
             passwordSalt = Crypto.GenerateSalt();
-            var hashedPassword = Crypto.HashPassword(Crypto.SHA256(password));
+            var hashedPassword = Crypto.VerifyHashedPassword(hashPass, Crypto.SHA256(pass));
 
             return hashedPassword;
         }
