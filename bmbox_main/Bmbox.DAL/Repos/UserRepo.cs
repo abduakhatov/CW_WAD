@@ -1,37 +1,65 @@
 ﻿using Bmbox.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Bmbox.DAL.Repos
 {
-    class UserRepo : AbsRepo<User>
+    public class UserRepo : AbsRepo<User>
     {
+        public UserRepo() : base()
+        {
+
+        }
+
         public override void Create(User obj)
         {
-            throw new NotImplementedException();
+            //try
+            //{
+                db.Users.Add(obj);
+                db.SaveChanges();
+            //}"ANau/1x0+tNhv7B2iLo6VFNOk7MMdDh+2sUmBwra9OuTLbFHcscrR9ckeClFg4FOyw=="
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
         }
 
         public override IQueryable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return db.Users;
         }
 
         public override User GetById(int i)
         {
-            throw new NotImplementedException();
+            User p = db.Users.Find(i);
+            if (p == null) return null;
+            return p;
         }
 
         public override void Remove(int i)
         {
-            throw new NotImplementedException();
+            db.Users.Remove(GetById(i));
+            //db.Products.Remove(db.Products.Where(id => id.Id == i);
+            //db.Products.
+            db.SaveChanges();
+            //Shohruh	Abduakhatov	qwe@mail.ru	qweqweqwe	qweqwe
         }
 
         public override void Update(User obj)
         {
-            throw new NotImplementedException();
+            //try
+            //{
+                db.Entry(obj).State = EntityState.Modified;
+                db.SaveChanges();
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
         }
     }
 }
