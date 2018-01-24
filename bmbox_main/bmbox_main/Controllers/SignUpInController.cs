@@ -41,6 +41,7 @@ namespace bmbox_main.Controllers
                 return View(model);
 
             var emailResult = new EmailHandler(model.Email).SendEmail();
+
             if (emailResult.Equals(Constants.FAIL))
             {
                 ViewBag.EmailResult = emailResult;

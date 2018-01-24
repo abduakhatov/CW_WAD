@@ -5,6 +5,8 @@ using Bmbox.DAL.Repos;
 using System.Linq;
 using bmbox_main.Utils;
 using System;
+using System.Collections.Generic;
+using PagedList;
 
 namespace bmbox_main.Controllers
 {
@@ -13,13 +15,29 @@ namespace bmbox_main.Controllers
         private AbsRepo<Product> repo = new ProductRepo();
         
         // GET: Product
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string nameSearch, string typeSearch)
         {
+            var products = repo.GetAll();
+
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.TypeSortParam = sortOrder == "Type" ? "type_desc" : "Type";
             ViewBag.PriceSortParam = sortOrder == "Price" ? "price_desc" : "Price";
 
-            var products = repo.GetAll();
+            var category = (from r in products select r.Type).Distinct().ToList();
+            List<string> res = new List<string>();
+            res.Add("All");
+            res.AddRange(category);
+
+            ViewBag.Categories = res;
+
+            if (!String.IsNullOrEmpty(nameSearch))
+            {
+                products = products.Where(s => s.Name.Equals(nameSearch));
+            }
+            if (!String.IsNullOrEmpty(typeSearch) && !typeSearch.Equals("All"))
+            {
+                products = products.Where(s => s.Type.Equals(typeSearch));
+            }
 
             switch (sortOrder)
             {

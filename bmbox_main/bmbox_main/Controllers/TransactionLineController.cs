@@ -9,8 +9,6 @@ namespace bmbox_main.Controllers
     public class TransactionLineController : Controller
     {
         AbsRepo<TransactionLine> repo = new TransactionLineRepo();
-        private int lastTransactionId;
-
         // GET: TransactionLine
         public ActionResult Index(int id)
         {
