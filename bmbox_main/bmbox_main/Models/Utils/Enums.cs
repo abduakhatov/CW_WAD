@@ -10,4 +10,11 @@ namespace bmbox_main.Utils
         Processed ,
         Processing
     }
+
+    public enum SortEnum
+    {
+        name_asc, name_desc,
+        type_asc, type_desc, 
+        price_asc, price_desc
+    }
 }

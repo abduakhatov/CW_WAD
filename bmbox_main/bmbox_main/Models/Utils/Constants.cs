@@ -14,5 +14,8 @@ namespace bmbox_main.Models.Utils
         //public static string WELCOM_MESSAGE = "Welcome to bmbox.com!\n Your registration has been completed successfuly.";
         public static string SUCCESS = "Email successfuly sent";
         public static string FAIL = "Failed while sending Email! Please, try another email adress";
+
+        public static string name_desc = "name_desc";
+
     }
 }

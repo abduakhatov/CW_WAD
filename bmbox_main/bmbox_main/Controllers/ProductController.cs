@@ -3,16 +3,46 @@ using System.Web.Mvc;
 using Bmbox.DAL.Entities;
 using Bmbox.DAL.Repos;
 using System.Linq;
+using bmbox_main.Utils;
+using System;
 
 namespace bmbox_main.Controllers
 {
     public class ProductController : Controller
     {
         private AbsRepo<Product> repo = new ProductRepo();
+        
         // GET: Product
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(repo.GetAll().Select(MapToModel));
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.TypeSortParam = sortOrder == "Type" ? "type_desc" : "Type";
+            ViewBag.PriceSortParam = sortOrder == "Price" ? "price_desc" : "Price";
+
+            var products = repo.GetAll();
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.Name);
+                    break;
+                case "Type":
+                    products = products.OrderBy(p => p.Type);
+                    break;
+                case "type_desc":
+                    products = products.OrderByDescending(p => p.Type);
+                    break;
+                case "Price":
+                    products = products.OrderBy(p => p.Cost);
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(p => p.Cost);
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Name);
+                    break;
+            }
+            return View(products.Select(MapToModel));
         }
 
         [HttpGet]

@@ -4,24 +4,51 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Products List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.ActionLink("Name", "Index", new {sortOrder = ViewBag.NameSortParam})
+            @if (ViewBag.NameSortParam == "name_desc"){
+                <a href="#">
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                </a>
+            } else {
+            <a href="#">
+                <span class="glyphicon glyphicon-arrow-down"></span>
+            </a>
+            }
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Brand)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.ActionLink("Category", "Index", new {sortOrder = ViewBag.TypeSortParam})
+            @if (ViewBag.TypeSortParam == "type_desc"){
+                <a href="#">
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                </a>
+            } else {
+                <a href="#">
+                    <span class="glyphicon glyphicon-arrow-down"></span>
+                </a>
+            }
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cost)
+            @Html.ActionLink("Price", "Index", new {sortOrder = ViewBag.PriceSortParam})
+            @if (ViewBag.PriceSortParam == "price_desc"){
+            <a href="#">
+                <span class="glyphicon glyphicon-arrow-up"></span>
+            </a>
+            } else {
+            <a href="#">
+                <span class="glyphicon glyphicon-arrow-down"></span>
+            </a>
+            }
         </th>
         <th>
             @Html.DisplayNameFor(model => model.QuantityLeft)
