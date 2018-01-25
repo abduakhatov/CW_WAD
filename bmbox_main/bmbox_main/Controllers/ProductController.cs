@@ -15,13 +15,37 @@ namespace bmbox_main.Controllers
         private AbsRepo<Product> repo = new ProductRepo();
         
         // GET: Product
-        public ActionResult Index(string sortOrder, string nameSearch, string typeSearch)
+        public ActionResult Index(string sortOrder, string nameSearch, string typeSearch
+            , int? page, string currentNameFilter, string currentTypeFilter)
         {
             var products = repo.GetAll();
-
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.TypeSortParam = sortOrder == "Type" ? "type_desc" : "Type";
             ViewBag.PriceSortParam = sortOrder == "Price" ? "price_desc" : "Price";
+
+            if (nameSearch != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                nameSearch = currentNameFilter;
+            }
+
+            if (typeSearch != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                typeSearch = currentTypeFilter;
+            }
+
+            ViewBag.CurrentNameFilter = nameSearch;
+            ViewBag.CurrentTypeFilter = typeSearch;
+
+
 
             var category = (from r in products select r.Type).Distinct().ToList();
             List<string> res = new List<string>();
@@ -60,7 +84,13 @@ namespace bmbox_main.Controllers
                     products = products.OrderBy(p => p.Name);
                     break;
             }
-            return View(products.Select(MapToModel));
+
+            int pageSize = 10;
+            var pageIndex = (page ?? 1);
+
+            return View(new PagedList<ProductViewModel>(products.Select(MapToModel), pageIndex, pageSize));
+            //return View(products.ToPagedList(pageNumber, pageSize));
+            //return View(products.Select(MapToModel));
         }
 
         [HttpGet]
