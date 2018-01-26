@@ -1,10 +1,11 @@
 ﻿@model bmbox_main.Models.RegistrationViewModel
+@using Resources
 
 @{
     ViewBag.Title = "Register";
 }
 
-<h2>Register</h2>
+<h2>@Res.Registration</h2>
 <h4>@ViewBag.EmailResult</h4>
 @using (Html.BeginForm()) 
 {
@@ -77,7 +78,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("@Res.BackToList", "Index")
 </div>
 
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>

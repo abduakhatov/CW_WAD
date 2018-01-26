@@ -147,6 +147,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Encapsulations\EmailHandler.cs" />
+    <Compile Include="Controllers\ParentController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SignUpInController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
@@ -179,11 +180,17 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Parent\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bmbox.DAL\Bmbox.DAL.csproj">
       <Project>{dffa30bc-8aeb-4ba0-bd41-c8aa11298da3}</Project>
       <Name>Bmbox.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{eb8db79b-b62b-464e-81a7-01c869aafa63}</Project>
+      <Name>Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

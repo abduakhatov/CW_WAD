@@ -15,7 +15,7 @@ using System.Web.Mvc;
 
 namespace bmbox_main.Controllers
 {
-    public class SignUpInController : Controller
+    public class SignUpInController : ParentController
     {
         private AbsRepo<User> repo = new UserRepo();
         private string passwordSalt;
