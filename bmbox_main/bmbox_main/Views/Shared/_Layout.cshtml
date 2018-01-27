@@ -24,18 +24,21 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" style="float: right"></ul>
+
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav">
+                            @if (User.Identity.IsAuthenticated) {
+                            <li><a>@User.Identity.Name</a></li>
+                            <li>@Html.ActionLink("Log Out", "LogOut", "SignUpIn", null, new { @class = "btn btn-success" })</li>
+                             }
+                             else {
+                                <li>@Html.ActionLink("Log in", "Login", "SignUpIn", null, new { @class = "btn btn-success" })</li>
+                             }
+                        </ul>
+                    </div>
+                
+
             </div>
-            @*@if (User.Identity.IsAuthenticated) {
-            <div class="navbar-right">
-                <ul class="nav navbar-nav">
-                    <li><a>@User.Identity.Name</a></li>
-                    <li>@Html.ActionLink("Log Out", "LogOut", "Login", null, new { @class = "btn btn-success" })</li>
-
-                </ul>
-            </div>
-            }*@
-
-
         </div>
     </div>
 

@@ -13,10 +13,20 @@ namespace bmbox_main.Tests
         public void TestMethod1()
         {
             SignUpInController c = new SignUpInController();
-            var pass = "hello";
-            var enc = c.EncryptPassword(pass);
-            Assert.IsTrue(c.UserExists(pass, enc));
+            var pass = "qweqwe";
+            var enc = c.EncryptPassword("a");
+            Assert.IsTrue(c.PasswordIsValid(pass, enc));
 
+        }
+
+        [TestMethod]
+        public void T()
+        {
+            SignUpInController c = new SignUpInController();
+            var pass = "qweqwe";
+            var enc = c.EncryptPassword("1234567890");
+            Assert.AreEqual(enc, "asd");
         }
     }
 }
+// APQNWAGYRnjTwZ1C2X2blknqfKbbxSWQkM1JuuCySPVNbS1Cgtgmw641/nIGz1sFFw==

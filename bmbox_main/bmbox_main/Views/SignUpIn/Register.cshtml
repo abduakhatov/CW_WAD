@@ -5,8 +5,8 @@
     ViewBag.Title = "Register";
 }
 
-<h2>@Res.Registration</h2>
-<h4>@ViewBag.EmailResult</h4>
+<h2>@Translate.Register</h2>
+<h4>@ViewBag.Register</h4>
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -78,7 +78,7 @@
 }
 
 <div>
-    @Html.ActionLink("@Res.BackToList", "Index")
+    @Html.ActionLink(@Translate.Register, "Index", "SignUpIn")
 </div>
 
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>

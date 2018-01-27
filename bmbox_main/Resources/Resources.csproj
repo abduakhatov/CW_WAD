@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EB8DB79B-B62B-464E-81A7-01C869AAFA63}</ProjectGuid>
+    <ProjectGuid>{BE114F4F-F863-4DA4-9649-175249BDC468}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Resources</RootNamespace>
@@ -41,64 +41,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Res.Designer.cs">
+    <Compile Include="Translateru.Designer.cs">
+      <DependentUpon>Translateru.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Res.resx</DependentUpon>
     </Compile>
-    <Compile Include="Res.ru.Designer.cs">
+    <Compile Include="Translate.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Res.ru.resx</DependentUpon>
+      <DependentUpon>Translate.resx</DependentUpon>
     </Compile>
-    <Compile Include="Res.uz.Designer.cs">
+    <Compile Include="Translate.uz.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Res.uz.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resource.ru.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.ru.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resource.uz.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.uz.resx</DependentUpon>
+      <DependentUpon>Translate.uz.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Res.resx">
+    <EmbeddedResource Include="Translateru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Res.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Res.ru.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Res.ru.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Res.uz.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Res.uz.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <LastGenOutput>Translateru.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resource.ru.resx">
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Translate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.ru.Designer.cs</LastGenOutput>
+      <LastGenOutput>Translate.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resource.uz.resx">
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Translate.uz.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.uz.Designer.cs</LastGenOutput>
+      <LastGenOutput>Translate.uz.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

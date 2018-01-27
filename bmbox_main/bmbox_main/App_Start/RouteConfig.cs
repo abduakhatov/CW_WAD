@@ -16,7 +16,9 @@ namespace bmbox_main
             routes.MapRoute(
                 name: "Default",
                 url: "{culture}/{controller}/{action}/{id}",
-                defaults: new {culture = "en", controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { culture = "en", controller = "SignUpIn", action = "Login", id = UrlParameter.Optional }
+                //url: "{controller}/{action}/{id}",
+                //defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace bmbox_main.Controllers
 {
+    [Authorize]
     public class TransactionLineController : Controller
     {
         AbsRepo<TransactionLine> repo = new TransactionLineRepo();

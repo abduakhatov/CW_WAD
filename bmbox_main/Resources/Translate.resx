@@ -118,33 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BackToList" xml:space="preserve">
-    <value>Ro'yxatga qaytish</value>
+    <value>Back to List</value>
   </data>
   <data name="Create" xml:space="preserve">
-    <value>Qo'shish</value>
+    <value>Create</value>
   </data>
   <data name="CreateNew" xml:space="preserve">
-    <value>Yangi qo'shish</value>
+    <value>Create New</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>Ingliz tili</value>
+    <value>English</value>
   </data>
   <data name="LastName" xml:space="preserve">
-    <value>Sharif/Familiya</value>
+    <value>Last Name</value>
+  </data>
+  <data name="LastnameRequired" xml:space="preserve">
+    <value>Lastname Required</value>
   </data>
   <data name="Registration" xml:space="preserve">
-    <value>A'zo bo'lish</value>
+    <value>Register</value>
   </data>
   <data name="Russian" xml:space="preserve">
-    <value>Russ tili</value>
+    <value>Russian</value>
   </data>
   <data name="SelectLanguage" xml:space="preserve">
-    <value>Tilingizni tanlang</value>
-  </data>
-  <data name="UsernameRequired" xml:space="preserve">
-    <value>Familiyangizni kiriting</value>
+    <value>Choose language</value>
   </data>
   <data name="Uzbek" xml:space="preserve">
-    <value>O'zbek tili</value>
+    <value>Uzbek</value>
   </data>
 </root>

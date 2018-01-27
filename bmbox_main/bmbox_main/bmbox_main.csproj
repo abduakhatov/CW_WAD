@@ -155,6 +155,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
     <Compile Include="Models\TransactionLineViewModel.cs" />
@@ -173,6 +174,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\SignUpIn\Register.cshtml" />
     <Content Include="Views\SignUpIn\Index.cshtml" />
+    <Content Include="Views\SignUpIn\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -189,7 +191,7 @@
       <Name>Bmbox.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Resources\Resources.csproj">
-      <Project>{eb8db79b-b62b-464e-81a7-01c869aafa63}</Project>
+      <Project>{be114f4f-f863-4da4-9649-175249bdc468}</Project>
       <Name>Resources</Name>
     </ProjectReference>
   </ItemGroup>

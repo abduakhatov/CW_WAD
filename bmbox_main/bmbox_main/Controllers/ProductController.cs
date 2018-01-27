@@ -10,7 +10,8 @@ using PagedList;
 
 namespace bmbox_main.Controllers
 {
-    public class ProductController : Controller
+    [Authorize]
+    public class ProductController : ParentController
     {
         private AbsRepo<Product> repo = new ProductRepo();
         
@@ -20,7 +21,7 @@ namespace bmbox_main.Controllers
         {
             var products = repo.GetAll();
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.NameSortParam = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.TypeSortParam = sortOrder == "Type" ? "type_desc" : "Type";
             ViewBag.PriceSortParam = sortOrder == "Price" ? "price_desc" : "Price";
 

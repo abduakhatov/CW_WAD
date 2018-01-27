@@ -9,13 +9,16 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace bmbox_main.Controllers
 {
-    public class SignUpInController : ParentController
+    //[AllowAnonymous]
+    public class SignUpInController : Controller
     {
         private AbsRepo<User> repo = new UserRepo();
         private string passwordSalt;
@@ -61,6 +64,44 @@ namespace bmbox_main.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginViewModel login, string url)
+        {
+            if (!ModelState.IsValid) return View();
+
+            var user = repo.GetAll().Where(u => u.Email == login.Email).Select(LogInMapToModel).ToList().First();
+           
+            if (user != null && PasswordIsValid(login.Password, user.Password))
+            {
+                FormsAuthentication.SetAuthCookie(login.Email, false);
+                if (Url.IsLocalUrl(url) && url.Length > 1 && !String.IsNullOrEmpty(url) && Regex.Match(url, @"/([A-Za-z]+)").Success)
+                {
+                    return Redirect(url);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Product");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Authentication Failed");
+                return RedirectToAction("Login", "SignUpIn");
+            }
+        }
+
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
+        }
+
         public ActionResult Delete(int id)
         {
             repo.Remove(id);
@@ -80,16 +121,24 @@ namespace bmbox_main.Controllers
             };
         }
 
-        private RegistrationViewModel MapToModel(User p)
+        //private RegistrationViewModel MapToModel(User p)
+        //{
+        //    return new RegistrationViewModel
+        //    {
+        //        Id = p.Id,
+        //        Name = p.Name,
+        //        LastName = p.LastName,
+        //        Email = p.Email,
+        //        Password = p.Password,
+        //        ShippingAdress = p.ShippingAdress,
+        //    };
+        //}
+        private LoginViewModel LogInMapToModel(User p)
         {
-            return new RegistrationViewModel
+            return new LoginViewModel
             {
-                Id = p.Id,
-                Name = p.Name,
-                LastName = p.LastName,
                 Email = p.Email,
                 Password = p.Password,
-                ShippingAdress = p.ShippingAdress,
             };
         }
 
@@ -102,7 +151,7 @@ namespace bmbox_main.Controllers
         }
 
 
-        public bool UserExists(string pass, string hashPass)
+        public bool PasswordIsValid(string pass, string hashPass)
         {
             passwordSalt = Crypto.GenerateSalt();
             var hashedPassword = Crypto.VerifyHashedPassword(hashPass, Crypto.SHA256(pass));
