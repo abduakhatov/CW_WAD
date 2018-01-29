@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace bmbox_main.Controllers
-{
+{// new one
     [Authorize]
     public class TransactionController : Controller
     {
