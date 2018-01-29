@@ -9,7 +9,6 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
-    @using System.Web.Security
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header" style="width: 50%;">
@@ -18,32 +17,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-
-                <div class="navbar-left">
-                    <ul class="nav navbar-nav">
-                        <li> @Html.ActionLink("All Products", "Index", "Product", new { area = "" }, new { @class = "navbar-brand" }) </li>
-                    </ul>
-                    <ul class="nav navbar-nav">
-                        <li>
-                            @Html.ActionLink("My Basket", "Index", "Transaction", new {
-                              email= @User.Identity.Name} , new { @class = "navbar-brand"})
-                    </li>
-                    </ul>
-                </div>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            <div class="navbar-header" style="width: 50%;">
+                @Html.ActionLink("Register", "Register", "SignUpIn", new { area = "" }, new { @class = "navbar-brand btn", @style ="text-align: right;width: 100%" })
+            </div>
+            <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" style="float: right"></ul>
-                
-                <div class="navbar-right">
-                    <ul class="nav navbar-nav">
-                        @if (User.Identity.IsAuthenticated) {
-                            <li><a>@User.Identity.Name</a></li>
-                            <li>@Html.ActionLink("Log Out", "LogOut", "SignUpIn", null, new { @class = "btn btn-success", @style="color: #fff"})</li>
-                        }
-                        else {
-                            <li>@Html.ActionLink("Register", "Register", "SignUpIn", new { area = "" }, new { @class = "navbar-brand btn"}) </li>
 
-                            <li>@Html.ActionLink("Log in", "Login", "SignUpIn", null, new { @class = "btn btn-success", @style="color: #fff"})</li>
-                        }
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav">
+                            @if (User.Identity.IsAuthenticated) {
+                            <li><a>@User.Identity.Name</a></li>
+                            <li>@Html.ActionLink("Log Out", "LogOut", "SignUpIn", null, new { @class = "btn btn-success" })</li>
+                             }
+                             else {
+                                <li>@Html.ActionLink("Log in", "Login", "SignUpIn", null, new { @class = "btn btn-success" })</li>
+                             }
                         </ul>
                     </div>
                 
