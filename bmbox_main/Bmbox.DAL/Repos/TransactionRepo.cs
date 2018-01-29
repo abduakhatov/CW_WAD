@@ -18,7 +18,25 @@ namespace Bmbox.DAL.Repos
         {
             try
             {
-                db.Transactions.Add(obj);
+                //obj.UserId = (from u in db.Users
+                //              where u.Email == obj.User.Email
+                //              select u.Id).First();
+
+                //var all = GetAll();
+                //var date = all.Where(u => u.Date == obj.Date);
+                //var user = date.Where(u => u.UserId == obj.UserId);
+
+
+                //if (user != null && user.Count() > 0) return;
+                //636527808000000000
+                //db.Transactions.Add(obj);
+                //db.SaveChanges();
+                db.Transactions.Add(new Transaction
+                {
+                    Date = 636527808000000000,
+                    Status = false,
+                    UserId = 1
+                });
                 db.SaveChanges();
             }
             catch (Exception)

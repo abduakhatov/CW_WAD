@@ -57,7 +57,7 @@ namespace bmbox_main.Controllers
 
             if (!String.IsNullOrEmpty(nameSearch))
             {
-                products = products.Where(s => s.Name.Equals(nameSearch));
+                products = products.Where(s => s.Name.Contains(nameSearch));
             }
             if (!String.IsNullOrEmpty(typeSearch) && !typeSearch.Equals("All"))
             {
@@ -90,8 +90,6 @@ namespace bmbox_main.Controllers
             var pageIndex = (page ?? 1);
 
             return View(new PagedList<ProductViewModel>(products.Select(MapToModel), pageIndex, pageSize));
-            //return View(products.ToPagedList(pageNumber, pageSize));
-            //return View(products.Select(MapToModel));
         }
 
         [HttpGet]
@@ -148,8 +146,29 @@ namespace bmbox_main.Controllers
 
         public ActionResult Delete(int id)
         {
-            repo.Remove(id);
-            return RedirectToAction("Index");
+            try
+            {
+                repo.Remove(id);
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult AddToBasket(int pId, string email)
+        {
+            try
+            {
+                TransactionController tc = new TransactionController();
+                //tc.Create(pId, email);
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception)
+            {
+                return View();
+            }
         }
 
 

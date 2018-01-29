@@ -25,38 +25,37 @@ namespace bmbox_main.Controllers
                 .Select(MapToModel));
         }
 
-        // POST: TransactionLine/Create
-        [HttpGet]
-        public ActionResult Create(int pId, short qnty, int tId)
+
+        public void Create(int pId, short qnty, int tId)
         {
             try
             {
-                if (ModelState.IsValid)
+                repo.Create(new TransactionLine
                 {
-                    TransactionLine tl = new TransactionLine();
-                    tl.ProductId = pId;
-                    tl.Quantity = qnty;
-                    tl.TransactionId = tId;
-                    repo.Create(tl);
-                    return RedirectToAction("List/" + tId);
-                } 
+                    ProductId = pId,
+                    Quantity = qnty,
+                    TransactionId = tId
+                });
             }
             catch (System.Exception)
             {
                 throw;
             }
-            return View();
-            
+        }
+
+        public ActionResult Details(int id)
+        {
+            return RedirectToAction("Details", "Product", new { id = id });
         }
 
         // POST: TransactionLine/Delete/5
         [HttpGet]
-        public ActionResult Delete(int id, int tid)
+        public ActionResult Delete(int transLineId, int TransId)
         {
             try
             {
-                repo.Remove(id);
-                return RedirectToAction("List/" + tid);
+                repo.Remove(transLineId);
+                return RedirectToAction("List/" + TransId);
             }
             catch
             {
@@ -74,7 +73,8 @@ namespace bmbox_main.Controllers
                 Brand = p.Product.Brand,
                 Type = p.Product.Type,
                 Cost = p.Product.Cost,
-                Quantity = p.Quantity
+                Quantity = p.Quantity,
+                TransactionId = p.TransactionId
             };
         }
     }

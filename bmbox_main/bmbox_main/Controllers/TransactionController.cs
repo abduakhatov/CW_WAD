@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace bmbox_main.Controllers
 <<<<<<< HEAD
@@ -19,9 +20,10 @@ namespace bmbox_main.Controllers
     {
         private AbsRepo<Transaction> repo = new TransactionRepo();
         // GET: Transaction
-        public ActionResult Index()
+        public ActionResult Index(string email)
         {
-            return View(repo.GetAll().Select(MapToModel));
+            if (string.IsNullOrEmpty(email)) return View();
+            return View(repo.GetAll().Where(u => u.User.Email == email).Select(MapToModel));
         }
 
         // GET: Transaction/Details/5
@@ -29,21 +31,44 @@ namespace bmbox_main.Controllers
         {
             return View(MapToModel(repo.GetById(id)));
         }
+        public ActionResult List(int id)
+        {
+            return RedirectToAction("List", "TransactionLine", new { Id = id});
+        }
 
         // GET: Transaction/Create
         public ActionResult Create()
         {
-            return View(new TransactionViewModel());
+            return View(new TTTVM());
         }
 
         // POST: Transaction/Create
         [HttpPost]
-        public ActionResult Create(TransactionViewModel t)
+        public ActionResult Create(TTTVM m)
         {
+            int pId = m.ProductId;
+            string email = m.Email;
             try
-            {//636521760000000000
-                var p = MapFromModel(t);
-                repo.Create(p);
+            {
+                long today = DateTime.Today.Ticks;
+
+                Transaction t = new Transaction
+                {
+                    User = new User { Email = email},
+                    Date = today
+                };
+                repo.Create(t);
+                TransactionLineController tlc = new TransactionLineController();
+
+                var all = repo.GetAll();
+                var date = all.Where(u => u.Date == today);
+                var user = date.Where(u => u.User.Email == email);
+                var tId = user.First().Id; 
+
+
+                tlc.Create(pId, 1, tId);
+
+                //636521760000000000   636527808000000000
                 return RedirectToAction("Index");
             }
             catch
@@ -51,31 +76,6 @@ namespace bmbox_main.Controllers
                 ViewBag.ErrorMessage = "Cannot create new record!";
                 return View();
             }
-        }
-
-        // GET: Transaction/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View(MapToModel(repo.GetById(id)));
-        }
-
-        // POST: Transaction/Edit/5
-        [HttpPost]
-        public ActionResult Edit(TransactionViewModel t)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    repo.Update(MapFromModel(t));
-                    return RedirectToAction("Index");
-                }
-                catch (System.Exception)
-                {
-                    throw;
-                }
-            }
-            return View();
         }
 
         // GET: Transaction/Delete/5

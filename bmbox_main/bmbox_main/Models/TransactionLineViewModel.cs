@@ -18,7 +18,7 @@ namespace bmbox_main.Models
         public decimal Cost { get; set; }
 
         public Nullable<short> Quantity { get; set; }
-        //[HiddenInput(DisplayValue = false)]
-        //public int TransactionId { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public int TransactionId { get; set; }
     }
 }

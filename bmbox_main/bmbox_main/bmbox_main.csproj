@@ -160,6 +160,7 @@
     <Compile Include="Models\RegistrationViewModel.cs" />
     <Compile Include="Models\TransactionLineViewModel.cs" />
     <Compile Include="Models\TransactionViewModel.cs" />
+    <Compile Include="Models\TTTVM.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Utils\Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -175,6 +176,7 @@
     <Content Include="Views\SignUpIn\Register.cshtml" />
     <Content Include="Views\SignUpIn\Index.cshtml" />
     <Content Include="Views\SignUpIn\Login.cshtml" />
+    <Content Include="Views\Transaction\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
