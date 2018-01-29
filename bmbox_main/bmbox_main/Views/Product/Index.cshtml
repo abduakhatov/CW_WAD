@@ -2,7 +2,6 @@
 @using PagedList.Mvc;
 @using PagedList;
 @model PagedList<bmbox_main.Models.ProductViewModel>
-
 @{
     ViewBag.Title = "All Products";
 }
@@ -29,7 +28,7 @@
 <div class="form-group">
     @using (Html.BeginForm("Index", "Product", FormMethod.Get))
     {
-        <div> Category </div> @Html.TextBox("nameSearch", ViewBag.currentNameFilter as string)
+        <div> Name </div> @Html.TextBox("nameSearch", ViewBag.currentNameFilter as string)
         <div class="margin-left:5px"> Category </div>@Html.DropDownList("typeSearch", new SelectList(ViewBag.Categories))
         <input type="submit" value="Search" />
     }
@@ -53,7 +52,6 @@
             <br>
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.Brand)*@
             Brand
         </th>
         <th>
@@ -82,7 +80,6 @@
             </a>
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.QuantityLeft)*@
             Quantity Left
         </th>
         <th></th>
@@ -106,6 +103,7 @@
             @Html.DisplayFor(modelItem => item.QuantityLeft)
         </td>
         <td>
+            @Html.ActionLink("Add to basket", "AddToBasket", new { pId=item.Id, email = @User.Identity.Name}) |
             @Html.ActionLink("Edit", "Update", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
@@ -125,9 +123,3 @@
 
         </div>
     </div>
-
-    <br />
-               Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-            @Html.PagedListPager(Model, page => Url.Action("Index", 
-                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
