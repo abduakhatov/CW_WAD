@@ -17,6 +17,7 @@ using System.Web.Security;
 
 namespace bmbox_main.Controllers
 {
+    //[AllowAnonymous]
     public class SignUpInController : Controller
     {
         private AbsRepo<User> repo = new UserRepo();
@@ -31,14 +32,12 @@ namespace bmbox_main.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Product");
             return View();
         }
 
         [HttpPost]
         public ActionResult Register(RegistrationViewModel model)
         {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Product");
             if (model.Password != model.ConfirmPassword)
                 ModelState.AddModelError("ConfirmPassword", "Should match passwords");
             if (!ModelState.IsValid && !ValidateCaptcha())
@@ -68,7 +67,6 @@ namespace bmbox_main.Controllers
 
         public ActionResult Login()
         {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Product");
             return View();
         }
 
@@ -76,7 +74,6 @@ namespace bmbox_main.Controllers
         public ActionResult Login(LoginViewModel login, string url)
         {
             if (!ModelState.IsValid) return View();
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Product");
 
             var user = repo.GetAll().Where(u => u.Email == login.Email).Select(LogInMapToModel).ToList().First();
            

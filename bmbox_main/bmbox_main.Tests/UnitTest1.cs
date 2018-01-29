@@ -27,20 +27,6 @@ namespace bmbox_main.Tests
             var enc = c.EncryptPassword("1234567890");
             Assert.AreEqual(enc, "asd");
         }
-
-        [TestMethod]
-        public void CreateTans()
-        {
-            AbsRepo<Transaction> repo = new TransactionRepo();
-            long today = DateTime.Today.Ticks;
-
-            Transaction t = new Transaction
-            {
-                User = new User { Email = "gk@mail.ru" },
-                Date = today
-            };
-            repo.Create(t);
-        }
     }
 }
 // APQNWAGYRnjTwZ1C2X2blknqfKbbxSWQkM1JuuCySPVNbS1Cgtgmw641/nIGz1sFFw==
