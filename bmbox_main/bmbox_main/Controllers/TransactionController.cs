@@ -10,11 +10,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 
 namespace bmbox_main.Controllers
-<<<<<<< HEAD
 {
-=======
-{// new one
->>>>>>> parent of 0f001cc... aaaaa
     [Authorize]
     public class TransactionController : Controller
     {
