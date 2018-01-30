@@ -20,5 +20,6 @@ namespace bmbox_main.Models
         public Nullable<short> Quantity { get; set; }
         [HiddenInput(DisplayValue = false)]
         public int TransactionId { get; set; }
+        public decimal total { get; set; }
     }
 }

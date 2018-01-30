@@ -13,8 +13,8 @@ namespace bmbox_main.Controllers
     [Authorize]
     public class ProductController : ParentController
     {
-        private AbsRepo<Product> repo = new ProductRepo();
-        
+        private AbsRepo<Product, int> repo = new ProductRepo();
+
         // GET: Product
         public ActionResult Index(string sortOrder, string nameSearch, string typeSearch
             , int? page, string currentNameFilter, string currentTypeFilter)
@@ -162,7 +162,7 @@ namespace bmbox_main.Controllers
             try
             {
                 TransactionController tc = new TransactionController();
-                //tc.Create(pId, email);
+                tc.Create(pId, email);
                 return RedirectToAction("Index");
             }
             catch (System.Exception)

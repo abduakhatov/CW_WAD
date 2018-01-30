@@ -81,10 +81,10 @@
     <Compile Include="Entities\Product.cs">
       <DependentUpon>BmboxDBContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Transaction.cs">
+    <Compile Include="Entities\TransactionLine.cs">
       <DependentUpon>BmboxDBContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\TransactionLine.cs">
+    <Compile Include="Entities\Transactions.cs">
       <DependentUpon>BmboxDBContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\User.cs">

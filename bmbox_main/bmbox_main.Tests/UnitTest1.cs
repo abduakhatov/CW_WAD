@@ -22,21 +22,35 @@ namespace bmbox_main.Tests
         [TestMethod]
         public void T()
         {
+            AbsRepo<User, int> repo = new UserRepo();
             SignUpInController c = new SignUpInController();
-            var pass = "qweqwe";
+
             var enc = c.EncryptPassword("1234567890");
-            Assert.AreEqual(enc, "asd");
+            Assert.AreEqual(enc, "1");
         }
+        /*
+        Test Name:	T
+Test FullName:	bmbox_main.Tests.UnitTest1.T
+Test Source:	C:\Users\Farruh\Desktop\WAD\solution\CW_WAD\bmbox_main\bmbox_main.Tests\UnitTest1.cs : line 24
+Test Outcome:	Failed
+Test Duration:	0:00:00.3949374
+
+Result StackTrace:	at bmbox_main.Tests.UnitTest1.T() in C:\Users\Farruh\Desktop\WAD\solution\CW_WAD\bmbox_main\bmbox_main.Tests\UnitTest1.cs:line 29
+Result Message:	Assert.AreEqual failed. Expected:<APypPOKDhcm3dYwY/EW9YkIHkraQAAhk/sdmZ/zPbZkghEXKhlNv7BuRwPCKwQpgPQ==>. Actual:<1>.
+
+
+
+    */
 
         [TestMethod]
         public void CreateTans()
         {
-            AbsRepo<Transaction> repo = new TransactionRepo();
+            AbsRepo<Transactions, string> repo = new TransactionRepo();
             long today = DateTime.Today.Ticks;
 
-            Transaction t = new Transaction
+            Transactions t = new Transactions
             {
-                User = new User { Email = "gk@mail.ru" },
+                UserEmail = "gk@mail.ru",
                 Date = today
             };
             repo.Create(t);

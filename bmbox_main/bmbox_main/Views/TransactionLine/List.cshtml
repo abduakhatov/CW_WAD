@@ -23,6 +23,10 @@
         <th>
             @Html.DisplayNameFor(model => model.Quantity)
         </th>
+        <th>
+            Total
+        </th>
+
         <th></th>
     </tr>
 
@@ -44,7 +48,9 @@
             @Html.DisplayFor(modelItem => item.Quantity)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.DisplayFor(modelItem => item.total)
+        </td>
+        <td>
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Remove from Basket", "Delete", new { transLineId =item.Id, TransId = item.TransactionId})
         </td>
@@ -52,3 +58,6 @@
 }
 
 </table>
+<p>
+    @Html.ActionLink("Back to my Baskeyt", "Back", new {email = @User.Identity.Name})
+</p>

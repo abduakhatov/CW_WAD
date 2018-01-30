@@ -6,12 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="eccf39723c124fd3b008e69fc39cfc64" Name="Diagram1">
         <EntityTypeShape EntityType="BmboxDBModel.Product" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BmboxDBModel.Transaction" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BmboxDBModel.TransactionLine" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BmboxDBModel.TransactionLine" Width="1.5" PointX="6.5" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BmboxDBModel.User" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="BmboxDBModel.FK_TransactionLine_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="BmboxDBModel.FK_Transaction_User" ManuallyRouted="false" />
-        <AssociationConnector Association="BmboxDBModel.FK_TransactionLine_Transaction" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BmboxDBModel.Transactions" Width="1.5" PointX="3.25" PointY="1.375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

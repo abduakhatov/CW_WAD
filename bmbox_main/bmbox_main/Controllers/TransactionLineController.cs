@@ -9,7 +9,7 @@ namespace bmbox_main.Controllers
     [Authorize]
     public class TransactionLineController : Controller
     {
-        AbsRepo<TransactionLine> repo = new TransactionLineRepo();
+        AbsRepo<TransactionLine, int> repo = new TransactionLineRepo();
         // GET: TransactionLine
         public ActionResult Index(int id)
         {
@@ -34,7 +34,7 @@ namespace bmbox_main.Controllers
                 {
                     ProductId = pId,
                     Quantity = qnty,
-                    TransactionId = tId
+                    TransactionId = tId,
                 });
             }
             catch (System.Exception)
@@ -61,7 +61,12 @@ namespace bmbox_main.Controllers
             {
                return View();
             }
-}
+        }
+
+        public ActionResult Back(string email)
+        {
+            return RedirectToAction("Index", "Transaction", new { email = email });
+        }
 
 
         private TransactionLineViewModel MapToModel(TransactionLine p)
@@ -74,7 +79,8 @@ namespace bmbox_main.Controllers
                 Type = p.Product.Type,
                 Cost = p.Product.Cost,
                 Quantity = p.Quantity,
-                TransactionId = p.TransactionId
+                TransactionId = p.TransactionId,
+                total = (decimal)p.Quantity * p.Product.Cost
             };
         }
     }

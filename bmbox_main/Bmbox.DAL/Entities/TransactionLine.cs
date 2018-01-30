@@ -20,6 +20,5 @@ namespace Bmbox.DAL.Entities
         public int TransactionId { get; set; }
     
         public virtual Product Product { get; set; }
-        public virtual Transaction Transaction { get; set; }
     }
 }

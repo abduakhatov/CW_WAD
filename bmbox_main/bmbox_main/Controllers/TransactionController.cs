@@ -14,100 +14,94 @@ namespace bmbox_main.Controllers
     [Authorize]
     public class TransactionController : Controller
     {
-        private AbsRepo<Transaction> repo = new TransactionRepo();
+        private AbsRepo<Transactions, string> repo = new TransactionRepo();
         // GET: Transaction
         public ActionResult Index(string email)
         {
             if (string.IsNullOrEmpty(email)) return View();
-            return View(repo.GetAll().Where(u => u.User.Email == email).Select(MapToModel));
+            var res = repo.GetAll().Where(u => u.UserEmail == email);
+            return View(res.Select(MapToModel));
         }
 
         // GET: Transaction/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string email)
         {
-            return View(MapToModel(repo.GetById(id)));
+            return View(MapToModel(repo.GetById(email)));
         }
         public ActionResult List(int id)
         {
             return RedirectToAction("List", "TransactionLine", new { Id = id});
         }
 
-        // GET: Transaction/Create
-        public ActionResult Create()
-        {
-            return View(new TTTVM());
-        }
-
         // POST: Transaction/Create
-        [HttpPost]
-        public ActionResult Create(TTTVM m)
+        public void Create(int pId, string email)
         {
-            int pId = m.ProductId;
-            string email = m.Email;
             try
             {
                 long today = DateTime.Today.Ticks;
-
-                Transaction t = new Transaction
+                Transactions t = new Transactions
                 {
-                    User = new User { Email = email},
-                    Date = today
+                    UserEmail = email,
+                    Date = today,
+                    Status = false
                 };
                 repo.Create(t);
-                TransactionLineController tlc = new TransactionLineController();
 
                 var all = repo.GetAll();
                 var date = all.Where(u => u.Date == today);
-                var user = date.Where(u => u.User.Email == email);
-                var tId = user.First().Id; 
+                var user = date.Where(u => u.UserEmail == email && u.Status == false);
+                var tId = user.First().Id;
 
-
-                tlc.Create(pId, 1, tId);
-
-                //636521760000000000   636527808000000000
-                return RedirectToAction("Index");
+                short quantity = 1;
+                new TransactionLineController().Create(pId, quantity, tId);
             }
             catch
             {
                 ViewBag.ErrorMessage = "Cannot create new record!";
-                return View();
+                return;
             }
         }
 
         // GET: Transaction/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, string email)
         {
-            repo.Remove(id);
-            return RedirectToAction("Index");
+            repo.Remove(id.ToString());
+            return RedirectToAction("Index", new { email = email }); 
+        }
+
+        public ActionResult Edit(int id, string email)
+        {
+           
+            repo.Update(new Transactions
+            {
+                Id = id,
+                UserEmail = email,
+                Status = true
+            });
+            return RedirectToAction("Index", new { email = email });
         }
 
 
-        public Transaction MapFromModel(TransactionViewModel m)
+        public Transactions MapFromModel(TransactionViewModel m)
         {
             int[] date = m.Date.Split('-').Select(int.Parse).ToArray();
             long dtl = new DateTime(date[2], date[1], date[0]).Ticks;
-            return new Transaction
+            var s = new Transactions
             {
                 Id = m.Id,
+                UserEmail = m.UserEmail,
                 Date = dtl,
-                User = new User
-                {
-                    Name = m.Name,
-                    LastName = m.LastName,
-                    ShippingAdress = m.ShippingAdress
-                },
-                Status = m.Status.Equals(TransactionStatusEnum.Processed)
+                Status = m.Status.Equals(TransactionStatusEnum.Processed),
             };
+            return s;
         }
-        private TransactionViewModel MapToModel(Transaction p)
+        private TransactionViewModel MapToModel(Transactions p)
         {
             return new TransactionViewModel
             {
                 Id = p.Id,
                 Date = (new DateTime(p.Date).ToString("dd-MM-yyyy")),
-                Name = p.User.Name,
-                LastName = p.User.LastName,
-                ShippingAdress = p.User.ShippingAdress,
+                UserEmail = p.UserEmail,
                 Status = (p.Status == true ? TransactionStatusEnum.Processed : TransactionStatusEnum.Processing)
             };
         }

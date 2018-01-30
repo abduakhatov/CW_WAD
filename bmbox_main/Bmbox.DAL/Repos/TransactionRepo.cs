@@ -8,35 +8,29 @@ using System.Threading.Tasks;
 
 namespace Bmbox.DAL.Repos
 {
-    public class TransactionRepo : AbsRepo<Transaction>
+    public class TransactionRepo : AbsRepo<Transactions, string>
     {
+        int id;
         public TransactionRepo() : base()
         {
         }
 
-        public override void Create(Transaction obj)
+        public override void Create(Transactions obj)
         {
             try
             {
-                //obj.UserId = (from u in db.Users
-                //              where u.Email == obj.User.Email
-                //              select u.Id).First();
+                var all = GetAll();
+                var date = all.Where(u => u.Date == obj.Date);
+                var user = date.Where(u => u.UserEmail == obj.UserEmail);
 
-                //var all = GetAll();
-                //var date = all.Where(u => u.Date == obj.Date);
-                //var user = date.Where(u => u.UserId == obj.UserId);
+                var statusL = user.Where(t => t.Status == false);
+                bool status = true;
+                if (statusL.Count() > 0 && statusL != null)
+                    status = statusL.First().Status ?? true ;  
 
+                if (user != null && user.Count() > 0 && !status) return;
 
-                //if (user != null && user.Count() > 0) return;
-                //636527808000000000
-                //db.Transactions.Add(obj);
-                //db.SaveChanges();
-                db.Transactions.Add(new Transaction
-                {
-                    Date = 636527808000000000,
-                    Status = false,
-                    UserId = 1
-                });
+                db.Transactions1.Add(obj);
                 db.SaveChanges();
             }
             catch (Exception)
@@ -45,26 +39,30 @@ namespace Bmbox.DAL.Repos
             }
         }
 
-        public override IQueryable<Transaction> GetAll()
+        public override IQueryable<Transactions> GetAll()
         {
-            IQueryable<Transaction> res =
-                (from tr in db.Transactions
-                join us in db.Users on tr.UserId equals us.Id
+            IQueryable<Transactions> res =
+                (from tr in db.Transactions1
+                 join us in db.Users on tr.UserEmail equals us.Email
                 select tr 
                 );
             return res;
         }
 
-        public override Transaction GetById(int i)
+        public override Transactions GetById(string i)
         {
-            return db.Transactions.Find(i);   
+            
+            var p = db.Transactions1.Find(id);
+            if (p == null) return null;
+            return p;
         }
 
-        public override void Remove(int i)
+        public override void Remove(string i)
         {
+            id = int.Parse(i);
             try
             {
-                db.Transactions.Remove(GetById(i));
+                db.Transactions1.Remove(GetById(i));
                 db.SaveChanges();
             }
             catch (Exception)
@@ -73,11 +71,13 @@ namespace Bmbox.DAL.Repos
             }
         }
 
-        public override void Update(Transaction obj)
+        public override void Update(Transactions obj)
         {
             try
             {
-                db.Entry(obj).State = EntityState.Modified;
+                var res = GetAll().Where(t => t.UserEmail == obj.UserEmail && t.Id == obj.Id).First();
+                res.Status = obj.Status;
+                db.Entry(res).State = EntityState.Modified;
                 db.SaveChanges();
             }
             catch (Exception)

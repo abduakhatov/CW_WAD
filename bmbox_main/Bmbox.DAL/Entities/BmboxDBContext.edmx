@@ -17,15 +17,6 @@
           <Property Name="Cost" Type="decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="QuantityLeft" Type="smallint" Nullable="false" />
         </EntityType>
-        <EntityType Name="Transaction">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Date" Type="bigint" Nullable="false" />
-          <Property Name="Status" Type="bit" />
-        </EntityType>
         <EntityType Name="TransactionLine">
           <Key>
             <PropertyRef Name="Id" />
@@ -34,6 +25,15 @@
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="smallint" />
           <Property Name="TransactionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="bit" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -47,18 +47,6 @@
           <Property Name="ShippingAdress" Type="varchar" MaxLength="70" Nullable="false" />
           <Property Name="UserRole" Type="nvarchar" MaxLength="15" />
         </EntityType>
-        <Association Name="FK_Transaction_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Transaction">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TransactionLine_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="TransactionLine" Type="Self.TransactionLine" Multiplicity="*" />
@@ -71,33 +59,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TransactionLine_Transaction">
-          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
-          <End Role="TransactionLine" Type="Self.TransactionLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Transaction">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TransactionLine">
-              <PropertyRef Name="TransactionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="BmboxDBModelStoreContainer">
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionLine" EntityType="Self.TransactionLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Transaction_User" Association="Self.FK_Transaction_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Transaction" EntitySet="Transaction" />
-          </AssociationSet>
           <AssociationSet Name="FK_TransactionLine_Product" Association="Self.FK_TransactionLine_Product">
             <End Role="Product" EntitySet="Product" />
-            <End Role="TransactionLine" EntitySet="TransactionLine" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TransactionLine_Transaction" Association="Self.FK_TransactionLine_Transaction">
-            <End Role="Transaction" EntitySet="Transaction" />
             <End Role="TransactionLine" EntitySet="TransactionLine" />
           </AssociationSet>
         </EntityContainer>
@@ -118,17 +86,6 @@
           <Property Name="QuantityLeft" Type="Int16" Nullable="false" />
           <NavigationProperty Name="TransactionLines" Relationship="Self.FK_TransactionLine_Product" FromRole="Product" ToRole="TransactionLine" />
         </EntityType>
-        <EntityType Name="Transaction">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="Int64" Nullable="false" />
-          <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Transaction_User" FromRole="Transaction" ToRole="User" />
-          <NavigationProperty Name="TransactionLines" Relationship="Self.FK_TransactionLine_Transaction" FromRole="Transaction" ToRole="TransactionLine" />
-        </EntityType>
         <EntityType Name="TransactionLine">
           <Key>
             <PropertyRef Name="Id" />
@@ -138,7 +95,6 @@
           <Property Name="Quantity" Type="Int16" />
           <Property Name="TransactionId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Self.FK_TransactionLine_Product" FromRole="TransactionLine" ToRole="Product" />
-          <NavigationProperty Name="Transaction" Relationship="Self.FK_TransactionLine_Transaction" FromRole="TransactionLine" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -151,7 +107,6 @@
           <Property Name="Password" Type="String" MaxLength="70" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ShippingAdress" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserRole" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_User" FromRole="User" ToRole="Transaction" />
         </EntityType>
         <Association Name="FK_TransactionLine_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
@@ -165,48 +120,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Transaction_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Transaction">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TransactionLine_Transaction">
-          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
-          <End Role="TransactionLine" Type="Self.TransactionLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Transaction">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TransactionLine">
-              <PropertyRef Name="TransactionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="BmboxDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
           <EntitySet Name="TransactionLines" EntityType="Self.TransactionLine" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_TransactionLine_Product" Association="Self.FK_TransactionLine_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="TransactionLine" EntitySet="TransactionLines" />
           </AssociationSet>
-          <AssociationSet Name="FK_Transaction_User" Association="Self.FK_Transaction_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Transaction" EntitySet="Transactions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TransactionLine_Transaction" Association="Self.FK_TransactionLine_Transaction">
-            <End Role="Transaction" EntitySet="Transactions" />
-            <End Role="TransactionLine" EntitySet="TransactionLines" />
-          </AssociationSet>
+          <EntitySet Name="Transactions1" EntityType="BmboxDBModel.Transactions" />
         </EntityContainer>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -223,16 +155,6 @@
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
                 <ScalarProperty Name="QuantityLeft" ColumnName="QuantityLeft" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Transactions">
-            <EntityTypeMapping TypeName="BmboxDBModel.Transaction">
-              <MappingFragment StoreEntitySet="Transaction">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -256,6 +178,16 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="ShippingAdress" ColumnName="ShippingAdress" />
                 <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions1">
+            <EntityTypeMapping TypeName="BmboxDBModel.Transactions">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

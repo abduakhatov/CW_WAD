@@ -12,19 +12,11 @@ namespace Bmbox.DAL.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Transaction
+    public partial class Transactions
     {
-        public Transaction()
-        {
-            this.TransactionLines = new HashSet<TransactionLine>();
-        }
-    
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public string UserEmail { get; set; }
         public long Date { get; set; }
         public Nullable<bool> Status { get; set; }
-    
-        public virtual User User { get; set; }
-        public virtual ICollection<TransactionLine> TransactionLines { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace bmbox_main.Controllers
 {
     public class SignUpInController : Controller
     {
-        private AbsRepo<User> repo = new UserRepo();
+        private AbsRepo<User, int> repo = new UserRepo();
         private string passwordSalt;
         // GET: SignInUp
         public ActionResult Index()
@@ -76,7 +76,7 @@ namespace bmbox_main.Controllers
         public ActionResult Login(LoginViewModel login, string url)
         {
             if (!ModelState.IsValid) return View();
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Product");
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Register");
 
             var user = repo.GetAll().Where(u => u.Email == login.Email).Select(LogInMapToModel).ToList().First();
            

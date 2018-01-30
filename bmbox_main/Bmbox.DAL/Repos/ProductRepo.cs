@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bmbox.DAL.Repos
 {
-    public class ProductRepo : AbsRepo<Product>
+    public class ProductRepo : AbsRepo<Product, int>
     {
         public ProductRepo() : base()
         {

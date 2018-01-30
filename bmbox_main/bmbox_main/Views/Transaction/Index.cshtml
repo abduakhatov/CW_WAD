@@ -5,23 +5,19 @@
 }
 
 <h2>Index</h2>
+<style type="text/css">
+    .Processed {
+        background-color: rgba(0,255,0,0.05);
+    }
+    .Processing {
+        background-color: rgba(255,0,0,0.1);
+    }
+</style>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShippingAdress)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
@@ -30,27 +26,20 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr class="@item.Status">
         <td>
             @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShippingAdress)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.ActionLink("Items in Basket", "List", new { id=item.Id }) |
-            @Html.ActionLink("Delete Basket", "Delete", new { id=item.Id })
+            @Html.ActionLink("Process this basket", "Edit", new { id=item.Id, email = @User.Identity.Name }) |
+            @Html.ActionLink("Details", "List", new { id=item.Id}) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id, email = @User.Identity.Name })
         </td>
     </tr>
+
 }
 
 </table>

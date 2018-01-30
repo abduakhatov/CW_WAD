@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bmbox.DAL.Repos
 {
-    public class TransactionLineRepo : AbsRepo<TransactionLine>
+    public class TransactionLineRepo : AbsRepo<TransactionLine, int>
     {
         public TransactionLineRepo() : base()
         {
