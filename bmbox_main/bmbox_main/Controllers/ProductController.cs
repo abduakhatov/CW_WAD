@@ -7,6 +7,9 @@ using bmbox_main.Utils;
 using System;
 using System.Collections.Generic;
 using PagedList;
+using System.Xml.Linq;
+using System.IO;
+using System.Xml.Schema;
 
 namespace bmbox_main.Controllers
 {
@@ -169,6 +172,56 @@ namespace bmbox_main.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult ConvertToXml(string format)
+        {
+            var products = repo.GetAll().Select(MapToModel);
+
+            var xDoc = new XDocument();
+            xDoc.Declaration = new XDeclaration("1.0", "utf-8", "no");
+
+            switch (format)
+            {
+                case "csv":
+                    xDoc.Add(new XProcessingInstruction("xml-stylesheet", "type='text/xsl' href='/xml/ProductToCSV.xslt'"));
+                    break;
+            }
+
+            xDoc.Add(new XElement("Products",
+                                    products.Select(p =>
+                                        new XElement("Product", new XAttribute("Id", p.Id),
+                                            new XElement("Name", p.Name),
+                                            new XElement("Brand", p.Brand),
+                                            new XElement("Type", p.Type),
+                                            new XElement("Image", p.Image),
+                                            new XElement("Cost", p.Cost),
+                                            new XElement("QuantityLeft", p.QuantityLeft)))));
+
+            var schemas = new XmlSchemaSet();
+            schemas.Add("", "http://" + System.Web.HttpContext.Current.Request.Url.Authority + "/xml/ProductSchema.xsd");
+
+            var isValid = true;
+            var errorMessage = "";
+
+            xDoc.Validate(schemas, (o, e) =>
+            {
+                isValid = false;
+                errorMessage = e.Message;
+            }, true);
+
+            if (!isValid)
+            {
+                xDoc = new XDocument();
+                xDoc.Declaration = new XDeclaration("1.0", "utf-8", "no");
+                xDoc.Add(new XElement("Error", errorMessage));
+            }
+
+            var sw = new StringWriter();
+            xDoc.Save(sw);
+
+
+            return Content(sw.ToString(), "text/xml");
         }
 
 

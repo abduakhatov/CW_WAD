@@ -124,6 +124,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="xml\ProductToCSV.xslt" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -175,6 +176,9 @@
     <Content Include="Views\SignUpIn\Register.cshtml" />
     <Content Include="Views\SignUpIn\Index.cshtml" />
     <Content Include="Views\SignUpIn\Login.cshtml" />
+    <None Include="xml\ProductSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

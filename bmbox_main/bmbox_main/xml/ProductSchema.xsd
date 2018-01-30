@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ProductSchema"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/ProductSchema.xsd"
+    xmlns:mstns="http://tempuri.org/ProductSchema.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <!-- new XElement("Product", new XAttribute("Id", p.Id),
+                                            new XElement("Name", p.Name),
+                                            new XElement("Brand", p.Brand),
+                                            new XElement("Type", p.Type),
+                                            new XElement("Image", p.Image),
+                                            new XElement("Cost", p.Cost),
+                                            new XElement("QuantityLeft", p.QuantityLeft)))));
+                                            -->
+  <xs:element name="Products">
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="Product" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+             <!--in a Product element of Products list the inner elements should be:-->
+              <xs:element name="Name" type="xs:string"></xs:element>
+              <xs:element name="Brand" type="xs:string"></xs:element>
+              <xs:element name="Type" type="xs:string"></xs:element>
+     
+              <!--if there is no image if the product, it will be empty-->
+              <xs:element name="Image">
+                <xs:simpleType>
+                  <xs:union>
+                    <xs:simpleType>
+                      <xs:restriction base='xs:string'>
+                        <xs:length value="0"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                      <xs:restriction base='xs:byte' />
+                    </xs:simpleType>
+                  </xs:union>
+                </xs:simpleType>
+              </xs:element>
+                  <!--cost is decimal wiht min val as 0 exclusive-->
+              <xs:element name="Cost">
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:minExclusive value="0"></xs:minExclusive>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              
+              <xs:element name="QuantityLeft">
+                <xs:simpleType>
+                  <xs:restriction base="xs:short">
+                    <xs:minExclusive value="0"></xs:minExclusive>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+            </xs:sequence>
+            <!--attribute id of each element-->
+            <xs:attribute name="Id" type="xs:positiveInteger"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>
