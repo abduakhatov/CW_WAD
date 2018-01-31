@@ -196,7 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bmbox.DAL\Bmbox.DAL.csproj">
-      <Project>{dffa30bc-8aeb-4ba0-bd41-c8aa11298da3}</Project>
+      <Project>{487430e0-f5bc-4455-9f04-fe0ce3e5ec4a}</Project>
       <Name>Bmbox.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Resources\Resources.csproj">

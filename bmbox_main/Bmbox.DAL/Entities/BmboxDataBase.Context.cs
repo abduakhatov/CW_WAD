@@ -13,10 +13,10 @@ namespace Bmbox.DAL.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BmboxDBEntities : DbContext
+    public partial class BmboxDataBaseEntities : DbContext
     {
-        public BmboxDBEntities()
-            : base("name=BmboxDBEntities")
+        public BmboxDataBaseEntities()
+            : base("name=BmboxDataBaseEntities")
         {
         }
     
@@ -27,7 +27,7 @@ namespace Bmbox.DAL.Entities
     
         public DbSet<Product> Products { get; set; }
         public DbSet<TransactionLine> TransactionLines { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Transactions> Transactions1 { get; set; }
     }
 }

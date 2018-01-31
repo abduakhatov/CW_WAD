@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BmboxDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BmboxDataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
@@ -59,7 +59,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BmboxDBModelStoreContainer">
+        <EntityContainer Name="BmboxDataBaseModelStoreContainer">
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionLine" EntityType="Self.TransactionLine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
@@ -69,10 +69,11 @@
             <End Role="TransactionLine" EntitySet="TransactionLine" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="BmboxDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="BmboxDataBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
@@ -95,6 +96,15 @@
           <Property Name="Quantity" Type="Int16" />
           <Property Name="TransactionId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Self.FK_TransactionLine_Product" FromRole="TransactionLine" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="Boolean" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -120,33 +130,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BmboxDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="BmboxDataBaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="TransactionLines" EntityType="Self.TransactionLine" />
+          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_TransactionLine_Product" Association="Self.FK_TransactionLine_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="TransactionLine" EntitySet="TransactionLines" />
           </AssociationSet>
-          <EntitySet Name="Transactions1" EntityType="BmboxDBModel.Transactions" />
         </EntityContainer>
-        <EntityType Name="Transactions">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="Int64" Nullable="false" />
-          <Property Name="Status" Type="Boolean" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BmboxDBModelStoreContainer" CdmEntityContainer="BmboxDBEntities">
+        <EntityContainerMapping StorageEntityContainer="BmboxDataBaseModelStoreContainer" CdmEntityContainer="BmboxDataBaseEntities">
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="BmboxDBModel.Product">
+            <EntityTypeMapping TypeName="BmboxDataBaseModel.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -159,7 +160,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TransactionLines">
-            <EntityTypeMapping TypeName="BmboxDBModel.TransactionLine">
+            <EntityTypeMapping TypeName="BmboxDataBaseModel.TransactionLine">
               <MappingFragment StoreEntitySet="TransactionLine">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
@@ -168,8 +169,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="BmboxDataBaseModel.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="BmboxDBModel.User">
+            <EntityTypeMapping TypeName="BmboxDataBaseModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -178,16 +189,6 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="ShippingAdress" ColumnName="ShippingAdress" />
                 <ScalarProperty Name="UserRole" ColumnName="UserRole" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Transactions1">
-            <EntityTypeMapping TypeName="BmboxDBModel.Transactions">
-              <MappingFragment StoreEntitySet="Transactions">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

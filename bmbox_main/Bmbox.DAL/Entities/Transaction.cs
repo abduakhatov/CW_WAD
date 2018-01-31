@@ -12,7 +12,7 @@ namespace Bmbox.DAL.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Transactions
+    public partial class Transaction
     {
         public int Id { get; set; }
         public string UserEmail { get; set; }

@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Bmbox.DAL.Repos
 {
-    public class TransactionRepo : AbsRepo<Transactions, string>
+    public class TransactionRepo : AbsRepo<Transaction, string>
     {
         int id;
         public TransactionRepo() : base()
         {
         }
 
-        public override void Create(Transactions obj)
+        public override void Create(Transaction obj)
         {
             try
             {
@@ -26,11 +26,11 @@ namespace Bmbox.DAL.Repos
                 var statusL = user.Where(t => t.Status == false);
                 bool status = true;
                 if (statusL.Count() > 0 && statusL != null)
-                    status = statusL.First().Status ?? true ;  
+                    status = statusL.First().Status ?? true;
 
                 if (user != null && user.Count() > 0 && !status) return;
 
-                db.Transactions1.Add(obj);
+                db.Transactions.Add(obj);
                 db.SaveChanges();
             }
             catch (Exception)
@@ -39,20 +39,20 @@ namespace Bmbox.DAL.Repos
             }
         }
 
-        public override IQueryable<Transactions> GetAll()
+        public override IQueryable<Transaction> GetAll()
         {
-            IQueryable<Transactions> res =
-                (from tr in db.Transactions1
+            IQueryable<Transaction> res =
+                (from tr in db.Transactions
                  join us in db.Users on tr.UserEmail equals us.Email
-                select tr 
+                 select tr
                 );
             return res;
         }
 
-        public override Transactions GetById(string i)
+        public override Transaction GetById(string i)
         {
-            
-            var p = db.Transactions1.Find(id);
+
+            var p = db.Transactions.Find(id);
             if (p == null) return null;
             return p;
         }
@@ -62,7 +62,7 @@ namespace Bmbox.DAL.Repos
             id = int.Parse(i);
             try
             {
-                db.Transactions1.Remove(GetById(i));
+                db.Transactions.Remove(GetById(i));
                 db.SaveChanges();
             }
             catch (Exception)
@@ -71,7 +71,7 @@ namespace Bmbox.DAL.Repos
             }
         }
 
-        public override void Update(Transactions obj)
+        public override void Update(Transaction obj)
         {
             try
             {

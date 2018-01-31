@@ -14,7 +14,7 @@ namespace bmbox_main.Controllers
     [Authorize]
     public class TransactionController : Controller
     {
-        private AbsRepo<Transactions, string> repo = new TransactionRepo();
+        private AbsRepo<Transaction, string> repo = new TransactionRepo();
         // GET: Transaction
         public ActionResult Index(string email)
         {
@@ -39,7 +39,7 @@ namespace bmbox_main.Controllers
             try
             {
                 long today = DateTime.Today.Ticks;
-                Transactions t = new Transactions
+                Transaction t = new Transaction
                 {
                     UserEmail = email,
                     Date = today,
@@ -72,7 +72,7 @@ namespace bmbox_main.Controllers
         public ActionResult Edit(int id, string email)
         {
            
-            repo.Update(new Transactions
+            repo.Update(new Transaction
             {
                 Id = id,
                 UserEmail = email,
@@ -82,11 +82,11 @@ namespace bmbox_main.Controllers
         }
 
 
-        public Transactions MapFromModel(TransactionViewModel m)
+        public Transaction MapFromModel(TransactionViewModel m)
         {
             int[] date = m.Date.Split('-').Select(int.Parse).ToArray();
             long dtl = new DateTime(date[2], date[1], date[0]).Ticks;
-            var s = new Transactions
+            var s = new Transaction
             {
                 Id = m.Id,
                 UserEmail = m.UserEmail,
@@ -95,7 +95,7 @@ namespace bmbox_main.Controllers
             };
             return s;
         }
-        private TransactionViewModel MapToModel(Transactions p)
+        private TransactionViewModel MapToModel(Transaction p)
         {
             return new TransactionViewModel
             {

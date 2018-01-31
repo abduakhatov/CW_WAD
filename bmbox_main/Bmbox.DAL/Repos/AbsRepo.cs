@@ -9,13 +9,13 @@ namespace Bmbox.DAL.Repos
 {
     public abstract class AbsRepo<T, E>
     {
-        protected BmboxDBEntities db;
+        protected BmboxDataBaseEntities db;
 
         public AbsRepo()
         {
-            db = new BmboxDBEntities();
+            db = new BmboxDataBaseEntities();
         }
- 
+
         public abstract IQueryable<T> GetAll();
         public abstract T GetById(E i);
         public abstract void Create(T obj);

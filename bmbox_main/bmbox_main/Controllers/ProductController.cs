@@ -51,7 +51,8 @@ namespace bmbox_main.Controllers
 
 
 
-            var category = (from r in products select r.Type).Distinct().ToList();
+            var category = products.Select(u => u.Type).Distinct().ToList();
+
             List<string> res = new List<string>();
             res.Add("All");
             res.AddRange(category);
@@ -237,6 +238,10 @@ namespace bmbox_main.Controllers
         }
 
 
+        public IEnumerable<ProductViewModel> GetAllProducts()
+        {
+            return repo.GetAll().Select(MapToModel);
+        }
 
         private Product MapFromModel(ProductViewModel m)
         {

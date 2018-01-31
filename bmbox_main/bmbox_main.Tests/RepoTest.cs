@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Bmbox.DAL.Entities;
 using Bmbox.DAL.Repos;
-using Bmbox.DAL.Entities;
 using bmbox_main.Controllers;
-using System.Web.Mvc;
 using bmbox_main.Models;
-using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace bmbox_main.Tests
 {
@@ -15,31 +14,44 @@ namespace bmbox_main.Tests
     {
         private ProductController controller;
         private ViewResult viewResult;
-
         AbsRepo<Product, int> repo;
+        Product product;
 
-        [TestInitialize]
+        ProductViewModel productVM;
+
+
+    [TestInitialize]
         public void Initialize()
         {
             controller = new ProductController();
-            viewResult = controller.Index("name_desc", "P5", "type_desc", 1, "name_desc", "type_desc") as ViewResult;
-
+           viewResult = controller.Index("name_desc", "P5", "type_desc", 1, "name_desc", "type_desc") as ViewResult;
             repo = new ProductRepo();
+
+            product = new Product
+            {
+                Name = "Name",
+                Brand = "Brand",
+                QuantityLeft = 1,
+                Type = "Type",
+                Cost = 100
+            };
+
+            productVM = new ProductViewModel
+            {
+                Name = "Name Updated",
+                Brand = "Brand Updated",
+                QuantityLeft = 0,
+                Type = "Type Updated",
+                Cost = 0
+            };
         }
 
         // After product is added without exception, the controller should return to "Index" ctrller
         [TestMethod]
         public void ProductCreate()
         {
-            var product = viewResult.ViewData.Model;
-            var result = (RedirectToRouteResult) controller.Create(new ProductViewModel
-            {
-                Name ="Name",
-                Brand = "Brand",
-                QuantityLeft = 1, 
-                Type = "Type",
-                Cost = 100
-            });
+            //var product = viewResult.ViewData.Model;
+            var result = (RedirectToRouteResult) controller.Create(productVM);
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
         }
@@ -48,16 +60,21 @@ namespace bmbox_main.Tests
         [TestMethod]
         public void ProductCreateDAL()
         {
-            try {
-                repo.Create(new Product
-                {
-                    Name = "Name",
-                    Brand = "Brand",
-                    QuantityLeft = 1,
-                    Type = "Type",
-                    Cost = 100,
-                });
-            }  catch (Exception)
+            repo.Create(product);
+            var id = repo.GetAll().Select(p => p.Id).Max();
+
+            Assert.AreEqual(repo.GetById(id), product);
+
+        }
+
+        [TestMethod]
+        public void AssertProductCreateDALException()
+        {
+            try
+            {
+                repo.Create(product);
+            }
+            catch (Exception)
             {
                 Assert.Fail();
             }
@@ -68,43 +85,52 @@ namespace bmbox_main.Tests
         [TestMethod]
         public void AssertProductUpdate()
         { 
-            var product = viewResult.ViewData.Model;
-            var result = (RedirectToRouteResult)controller.Create(new ProductViewModel
-            {
-                Name = "Name Updated",
-                Brand = "Brand Updated",
-                QuantityLeft = 0,
-                Type = "Type Updated",
-                Cost = 0
-            });
+           // var product = viewResult.ViewData.Model;
+            var result = (RedirectToRouteResult)controller.Create(productVM);
             Assert.AreEqual("Index", result.RouteValues["action"]);
+        }
+        // todo
+        [TestMethod]
+        public void AssertProductUpdateException()
+        {
+            try
+            {
+                var result = (RedirectToRouteResult)controller.Create(productVM);
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
+            }
+            Assert.IsTrue(true);
         }
 
         [TestMethod]
         public void AsserProductSorting()
         {
             AbsRepo<Product, int> repository = new ProductRepo();
-         
+
             var product = repository.GetAll();
 
             var sortedProductDesc = controller.Sort("type_desc", product).ToList();
             var sortedProductAsc = controller.Sort("Type", product).ToList();
 
-            Assert.AreSame(sortedProductAsc.First(), sortedProductDesc.Last());
-            Assert.AreSame(sortedProductAsc.Last(), sortedProductDesc.First());
+            Assert.AreEqual(sortedProductAsc.First().Type, sortedProductDesc.Last().Type);
+            Assert.AreEqual(sortedProductAsc.Last().Type, sortedProductDesc.First().Type);
 
             sortedProductDesc = controller.Sort("price_desc", product).ToList();
             sortedProductAsc = controller.Sort("Price", product).ToList();
 
-            Assert.AreSame(sortedProductAsc.First(), sortedProductDesc.Last());
-            Assert.AreSame(sortedProductAsc.Last(), sortedProductDesc.First());
+            Assert.AreEqual(sortedProductAsc.First().Cost, sortedProductDesc.Last().Cost);
+            Assert.AreEqual(sortedProductAsc.Last().Cost, sortedProductDesc.First().Cost);
 
         }
+
 
         [TestMethod]
         public void AsserProductSearching()
         {
             var products = repo.GetAll();
+
             var search = "Galaxy";
             var searchResult = controller.SearchResult(search, null, products).ToList();
             var expectedResult = products.Where(s => s.Name.Contains(search)).ToList();
@@ -131,12 +157,12 @@ namespace bmbox_main.Tests
         [TestMethod]
         public void AssertNewTransaction()
         {
-            AbsRepo<Transactions, string> repo = new TransactionRepo();
+            AbsRepo<Transaction, string> repo = new TransactionRepo();
             long today = DateTime.Today.Ticks;
 
             try
             {
-                repo.Create(new Transactions
+                repo.Create(new Transaction
                 {
                     UserEmail = "gk@mail.ru",
                     Date = today

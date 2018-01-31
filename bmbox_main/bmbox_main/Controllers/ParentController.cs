@@ -10,7 +10,6 @@ namespace bmbox_main.Controllers
     public class ParentController : Controller
     {
         private static readonly List<string> _cultures = new List<string> {
-            "en-US",
             "en",
             "ru",
             "uz" };

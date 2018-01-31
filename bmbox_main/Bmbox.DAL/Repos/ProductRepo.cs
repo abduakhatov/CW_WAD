@@ -29,7 +29,8 @@ namespace Bmbox.DAL.Repos
 
         public override IQueryable<Product> GetAll()
         {
-            return db.Products;
+           // return db.Products;
+            return (from p in db.Products select p);
         }
 
         public override Product GetById(int i)
@@ -39,7 +40,7 @@ namespace Bmbox.DAL.Repos
             return p;
         }
 
-        public override void Remove(int i) 
+        public override void Remove(int i)
         {
             db.Products.Remove(GetById(i));
             //db.Products.Remove(db.Products.Where(id => id.Id == i);
@@ -47,7 +48,7 @@ namespace Bmbox.DAL.Repos
             db.SaveChanges();
         }
 
-        public override void Update(Product obj) 
+        public override void Update(Product obj)
         {
             try
             {
