@@ -282,3 +282,7 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/bmbox_main/bmbox_main/App_Data/ssss
+/bmbox_main/bmbox_main/App_Data/ssss/BmboxDB_log.ldf
+/bmbox_main/bmbox_main/App_Data/ssss/BmboxDB_log.ldf
+/bmbox_main/bmbox_main/App_Data/ssss/BmboxDB.mdf
