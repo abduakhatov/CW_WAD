@@ -58,15 +58,18 @@ namespace bmbox_main.Controllers
 
             ViewBag.Categories = res;
 
-            if (!String.IsNullOrEmpty(nameSearch))
-            {
-                products = products.Where(s => s.Name.Contains(nameSearch));
-            }
-            if (!String.IsNullOrEmpty(typeSearch) && !typeSearch.Equals("All"))
-            {
-                products = products.Where(s => s.Type.Equals(typeSearch));
-            }
+            products = SearchResult(nameSearch, typeSearch, products);
+            products = Sort(sortOrder, products);
 
+
+            int pageSize = 10;
+            var pageIndex = (page ?? 1);
+
+            return View(new PagedList<ProductViewModel>(products.Select(MapToModel), pageIndex, pageSize));
+        }
+
+        public IQueryable<Product> Sort(string sortOrder, IQueryable<Product> products)
+        {
             switch (sortOrder)
             {
                 case "name_desc":
@@ -88,11 +91,20 @@ namespace bmbox_main.Controllers
                     products = products.OrderBy(p => p.Name);
                     break;
             }
+            return products;
+        }
 
-            int pageSize = 10;
-            var pageIndex = (page ?? 1);
-
-            return View(new PagedList<ProductViewModel>(products.Select(MapToModel), pageIndex, pageSize));
+        public IQueryable<Product> SearchResult(string nameSearch, string typeSearch, IQueryable<Product> products)
+        {
+            if (!String.IsNullOrEmpty(nameSearch))
+            {
+                products = products.Where(s => s.Name.Contains(nameSearch));
+            }
+            if (!String.IsNullOrEmpty(typeSearch) && !typeSearch.Equals("All"))
+            {
+                products = products.Where(s => s.Type.Equals(typeSearch));
+            }
+            return products;
         }
 
         [HttpGet]

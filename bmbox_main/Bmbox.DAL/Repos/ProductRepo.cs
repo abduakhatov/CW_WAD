@@ -51,7 +51,8 @@ namespace Bmbox.DAL.Repos
         {
             try
             {
-                db.Entry(obj).State = EntityState.Modified;
+                var q = obj;
+                db.Entry(q).State = EntityState.Modified;
                 db.SaveChanges();
             }
             catch (Exception)

@@ -51,7 +51,7 @@
             @Html.DisplayFor(modelItem => item.total)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
             @Html.ActionLink("Remove from Basket", "Delete", new { transLineId =item.Id, TransId = item.TransactionId})
         </td>
     </tr>
@@ -61,3 +61,9 @@
 <p>
     @Html.ActionLink("Back to my Baskeyt", "Back", new {email = @User.Identity.Name})
 </p>
+
+@section scripts {
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/ProductController.js"></script>
+    <script src="~/Scripts/Products.js"></script>
+}

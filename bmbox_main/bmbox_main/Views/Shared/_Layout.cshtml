@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
@@ -25,15 +26,26 @@
                     </ul>
                     <ul class="nav navbar-nav">
                         <li>
-                            @Html.ActionLink("My Basket", "Index", "Transaction", new {
-                              email= @User.Identity.Name} , new { @class = "navbar-brand"})
-                    </li>
+                            @Html.ActionLink("XML", "ConvertToXml", "Product" , new { @class = "navbar-brand"})
+                         </li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink("CSV", "ConvertToXml", "Product", new {
+                            format = "csv"} , new { @class = "navbar-brand"})
+                        </li>
                     </ul>
                 </div>
             </div>
                 <ul class="nav navbar-nav" style="float: right"></ul>
                 
                 <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink("My Basket", "Index", "Transaction", new {
+                            email= @User.Identity.Name} , new { @class = "navbar-brand"})
+                        </li>
+                    </ul>
                     <ul class="nav navbar-nav">
                         @if (User.Identity.IsAuthenticated) {
                             <li><a>@User.Identity.Name</a></li>
@@ -50,7 +62,6 @@
 
             </div>
         </div>
-    </div>
 
     <div class="container body-content">
         @RenderBody()

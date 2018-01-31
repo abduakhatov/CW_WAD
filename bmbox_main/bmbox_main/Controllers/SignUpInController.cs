@@ -1,4 +1,5 @@
-﻿using Bmbox.DAL.Entities;
+﻿
+using Bmbox.DAL.Entities;
 using Bmbox.DAL.Repos;
 using bmbox_main.Controllers.Encapsulations;
 using bmbox_main.Models;

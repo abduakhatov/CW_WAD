@@ -19,10 +19,11 @@ namespace bmbox_main.Controllers
         [HttpGet]
         public ActionResult List(int id)
         {
-            return View(repo
+            var res = repo
                 .GetAll()
                 .Where(t => t.TransactionId == id)
-                .Select(MapToModel));
+                .Select(MapToModel);
+            return View(res);
         }
 
 
@@ -80,7 +81,8 @@ namespace bmbox_main.Controllers
                 Cost = p.Product.Cost,
                 Quantity = p.Quantity,
                 TransactionId = p.TransactionId,
-                total = (decimal)p.Quantity * p.Product.Cost
+                total = (decimal)p.Quantity * p.Product.Cost, 
+                ProductId = p.ProductId
             };
         }
     }

@@ -124,6 +124,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\ProductController.js" />
+    <Content Include="Scripts\Products.js" />
     <Content Include="xml\ProductToCSV.xslt" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -153,6 +156,7 @@
     <Compile Include="Controllers\SignUpInController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\TransactionLineController.cs" />
+    <Compile Include="Controllers\v1\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -176,6 +180,7 @@
     <Content Include="Views\SignUpIn\Register.cshtml" />
     <Content Include="Views\SignUpIn\Index.cshtml" />
     <Content Include="Views\SignUpIn\Login.cshtml" />
+    <Content Include="Views\Product\Index - Copy.cshtml" />
     <None Include="xml\ProductSchema.xsd">
       <SubType>Designer</SubType>
     </None>
