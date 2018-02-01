@@ -45,7 +45,7 @@
               <xs:element name="Cost">
                 <xs:simpleType>
                   <xs:restriction base="xs:decimal">
-                    <xs:minExclusive value="0"></xs:minExclusive>
+                    <xs:minInclusive value="0"></xs:minInclusive>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -53,7 +53,7 @@
               <xs:element name="QuantityLeft">
                 <xs:simpleType>
                   <xs:restriction base="xs:short">
-                    <xs:minExclusive value="0"></xs:minExclusive>
+                    <xs:minInclusive value="0"></xs:minInclusive>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

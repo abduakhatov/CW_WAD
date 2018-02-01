@@ -21,7 +21,6 @@ namespace bmbox_main.Controllers
     public class SignUpInController : Controller
     {
         private AbsRepo<User, int> repo = new UserRepo();
-        private string passwordSalt;
         // GET: SignInUp
         public ActionResult Index()
         {
@@ -41,9 +40,20 @@ namespace bmbox_main.Controllers
         {
             if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Product");
             if (model.Password != model.ConfirmPassword)
-                ModelState.AddModelError("ConfirmPassword", "Should match passwords");
+            {
+                ModelState.AddModelError("ConfirmPassword", "Passwords should match");
+                return View(model);
+            }
             if (!ModelState.IsValid && !ValidateCaptcha())
                 return View(model);
+
+            var user = repo.GetAll().Any(u => u.Email == model.Email);
+
+            if(user)
+            {
+                ModelState.AddModelError("Email", "User with email already exists");
+                return View(model);
+            }
 
             var emailResult = new EmailHandler(model.Email).SendEmail();
 
@@ -148,7 +158,6 @@ namespace bmbox_main.Controllers
 
         public string EncryptPassword(string password)
         {
-            passwordSalt = Crypto.GenerateSalt();
             var hashedPassword = Crypto.HashPassword(Crypto.SHA256(password));
 
             return hashedPassword;
@@ -157,7 +166,6 @@ namespace bmbox_main.Controllers
 
         public bool PasswordIsValid(string pass, string hashPass)
         {
-            passwordSalt = Crypto.GenerateSalt();
             var hashedPassword = Crypto.VerifyHashedPassword(hashPass, Crypto.SHA256(pass));
 
             return hashedPassword;

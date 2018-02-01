@@ -40,14 +40,18 @@
                 <ul class="nav navbar-nav" style="float: right"></ul>
                 
                 <div class="navbar-right">
-                    <ul class="nav navbar-nav">
+                    @*<ul class="nav navbar-nav">
                         <li>
                             @Html.ActionLink("My Basket", "Index", "Transaction", new {
                             email= @User.Identity.Name} , new { @class = "navbar-brand"})
                         </li>
-                    </ul>
+                    </ul>*@
                     <ul class="nav navbar-nav">
                         @if (User.Identity.IsAuthenticated) {
+                            <li>
+                                @Html.ActionLink("My Basket", "Index", "Transaction", new {
+                                email= @User.Identity.Name} , new { @class = "navbar-brand"})
+                            </li>
                             <li><a>@User.Identity.Name</a></li>
                             <li>@Html.ActionLink("Log Out", "LogOut", "SignUpIn", null, new { @class = "btn btn-success", @style="color: #fff"})</li>
                         }

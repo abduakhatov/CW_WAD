@@ -14,15 +14,15 @@ namespace bmbox_main.Models
         public int Id { get; set; }
 
         [DisplayName("First Name")]
-        [Required]
+        [Required(ErrorMessage = "First Name is required")]
         public string Name { get; set; }
 
         [DisplayName("Last Name")]
-        [Required]
+        [Required(ErrorMessage = "Last Name is required")]
         public string LastName { get; set; }
 
         [DisplayName("Email")]
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
@@ -31,14 +31,15 @@ namespace bmbox_main.Models
         public string ShippingAdress { get; set; }
 
         [DisplayName("Password")]
+        [Required(ErrorMessage = "Password is required")]
+        [StringLength(255, ErrorMessage = "Must be between 5 and 255 characters", MinimumLength = 5)]
         [DataType(DataType.Password)]
-        [Required]
-        [MinLength(5)]
         public string Password { get; set; }
 
         [DisplayName("Confirm Password")]
+        [Required(ErrorMessage = "Confirm Password is required")]
+        [StringLength(255, ErrorMessage = "Must be between 5 and 255 characters", MinimumLength = 5)]
         [DataType(DataType.Password)]
-        [Required]
         public string ConfirmPassword { get; set; }
     }
 }
