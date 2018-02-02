@@ -29,5 +29,6 @@ namespace Bmbox.DAL.Entities
         public DbSet<TransactionLine> TransactionLines { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Log> Logs { get; set; }
     }
 }

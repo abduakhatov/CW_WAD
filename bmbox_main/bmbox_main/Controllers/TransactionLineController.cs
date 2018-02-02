@@ -1,6 +1,8 @@
 ﻿using Bmbox.DAL.Entities;
 using Bmbox.DAL.Repos;
+using bmbox_main.Helpers;
 using bmbox_main.Models;
+using bmbox_main.Models.Utils;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -10,6 +12,11 @@ namespace bmbox_main.Controllers
     public class TransactionLineController : Controller
     {
         AbsRepo<TransactionLine, int> repo = new TransactionLineRepo();
+        private Log log = new Log()
+        {
+            Controller = "TransactionLine"
+        };
+
         // GET: TransactionLine
         public ActionResult Index(int id)
         {
@@ -19,6 +26,11 @@ namespace bmbox_main.Controllers
         [HttpGet]
         public ActionResult List(int id)
         {
+            log.Action = "Index";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            log.User = User.Identity.Name;
+            LogHelper.Info(log);
             var res = repo
                 .GetAll()
                 .Where(t => t.TransactionId == id)
@@ -29,8 +41,14 @@ namespace bmbox_main.Controllers
 
         public void Create(int pId, short qnty, int tId)
         {
+            log.Action = "Index";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            log.User = User.Identity.Name;
+           
             try
             {
+                LogHelper.Info(log);
                 repo.Create(new TransactionLine
                 {
                     ProductId = pId,
@@ -38,14 +56,20 @@ namespace bmbox_main.Controllers
                     TransactionId = tId,
                 });
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                log.Action = log.Action + " => " + e;
+                LogHelper.Error(log);
                 throw;
             }
         }
 
         public ActionResult Details(int id)
         {
+            log.Action = "Index";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            log.User = User.Identity.Name;
             return RedirectToAction("Details", "Product", new { id = id });
         }
 

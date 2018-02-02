@@ -10,6 +10,8 @@ using PagedList;
 using System.Xml.Linq;
 using System.IO;
 using System.Xml.Schema;
+using bmbox_main.Helpers;
+using bmbox_main.Models.Utils;
 
 namespace bmbox_main.Controllers
 {
@@ -17,6 +19,10 @@ namespace bmbox_main.Controllers
     public class ProductController : ParentController
     {
         private AbsRepo<Product, int> repo = new ProductRepo();
+        private Log log = new Log()
+        {
+            Controller = "Parent"
+        };
 
         // GET: Product
         public ActionResult Index(string sortOrder, string nameSearch, string typeSearch
@@ -59,9 +65,23 @@ namespace bmbox_main.Controllers
 
             ViewBag.Categories = res;
 
-            products = SearchResult(nameSearch, typeSearch, products);
-            products = Sort(sortOrder, products);
+            try
+            {
+                log.Action = "Index";
+                log.IPAddress = Request.UserHostAddress.ToString();
+                log.Method = Constants.LOG_METHOD_GET;
+                log.User = User.Identity.Name;
 
+                products = SearchResult(nameSearch, typeSearch, products);
+                products = Sort(sortOrder, products);
+
+                LogHelper.Info(log);
+            }
+            catch (Exception e)
+            {
+                log.Action = log.Action + "\n" + e.ToString();
+                LogHelper.Error(log);
+            }
 
             int pageSize = 10;
             var pageIndex = (page ?? 1);
@@ -111,20 +131,40 @@ namespace bmbox_main.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            try
+            {
+                log.Action = "Create";
+                log.IPAddress = Request.UserHostAddress.ToString();
+                log.Method = Constants.LOG_METHOD_GET;
+                log.User = User.Identity.Name;
+                LogHelper.Info(log);
+            }
+            catch (Exception e)
+            {
+                log.Action = log.Action + "\n" + e.ToString();
+                LogHelper.Error(log);
+            }
             return View(new ProductViewModel());
         }
 
         [HttpPost]
         public ActionResult Create(ProductViewModel m)
         {
+            log.Action = "Create";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_POST;
+            log.User = User.Identity.Name;
             try
             {
                 var p = MapFromModel(m);
                 repo.Create(p);
+                LogHelper.Info(log);
                 return RedirectToAction("Index");
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                log.Action = log.Action + "\n" + e.ToString();
+                LogHelper.Error(log);
                 throw;
             }
         }
@@ -132,63 +172,126 @@ namespace bmbox_main.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            return View(MapToModel(repo.GetById(id)));
+            log.Action = "Details";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            log.User = User.Identity.Name;
+            Product res = null;
+            try
+            {
+                LogHelper.Info(log);
+                res = repo.GetById(id);
+                
+            }
+            catch (System.Exception e)
+            {
+                log.Action = log.Action + "\n" + e.ToString();
+                LogHelper.Error(log);
+                throw;
+            }
+            return View(MapToModel(res));
         }
 
 
         [HttpGet]
         public ActionResult Update(int id)
         {
-            return View(MapToModel(repo.GetById(id)));
+            log.Action = "Update";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            log.User = User.Identity.Name;
+            Product res = null;
+            try
+            {
+                LogHelper.Info(log);
+                res = repo.GetById(id);
+
+            }
+            catch (System.Exception e)
+            {
+                log.Action = log.Action + "\n" + e.ToString();
+                LogHelper.Error(log);
+                throw;
+            }
+            return View(MapToModel(res));
         }
 
         [HttpPost]
         public ActionResult Update(ProductViewModel p)
         {
+            log.Action = "Update";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_POST;
+            log.User = User.Identity.Name;
             if (ModelState.IsValid)
             {
                 try
                 {
                     repo.Update(MapFromModel(p));
+                    LogHelper.Info(log);
                     return RedirectToAction("Index");
                 }
-                catch (System.Exception)
+                catch (System.Exception e)
                 {
+                    log.Action = log.Action + "\n" + e.ToString();
+                    LogHelper.Error(log);
                     throw;
                 }
             }
+            log.Action = log.Action + "\nInvalid Model State";
+            LogHelper.Error(log);
             return View();
         }
 
         public ActionResult Delete(int id)
         {
+            log.Action = "Delete";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            log.User = User.Identity.Name;
+
             try
             {
                 repo.Remove(id);
+                LogHelper.Info(log);
                 return RedirectToAction("Index");
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                log.Action = log.Action + "\n" + e.ToString();
+                LogHelper.Error(log);
                 return View();
             }
         }
 
         public ActionResult AddToBasket(int pId, string email)
         {
+            log.Action = "AddToBasket";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            log.User = User.Identity.Name;
             try
             {
                 TransactionController tc = new TransactionController();
                 tc.Create(pId, email);
+                LogHelper.Info(log);
                 return RedirectToAction("Index");
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                log.Action = log.Action + "\n" + e.ToString();
+                LogHelper.Error(log);
                 return View();
             }
         }
 
         public ActionResult ConvertToXml(string format)
         {
+            log.Action = "AddToBasket";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            log.User = User.Identity.Name;
+
             var products = repo.GetAll().Select(MapToModel);
 
             var xDoc = new XDocument();
@@ -233,15 +336,10 @@ namespace bmbox_main.Controllers
             var sw = new StringWriter();
             xDoc.Save(sw);
 
-
+            LogHelper.Info(log);
             return Content(sw.ToString(), "text/xml");
         }
 
-
-        public IEnumerable<ProductViewModel> GetAllProducts()
-        {
-            return repo.GetAll().Select(MapToModel);
-        }
 
         private Product MapFromModel(ProductViewModel m)
         {

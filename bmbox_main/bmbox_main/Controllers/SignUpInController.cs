@@ -2,6 +2,7 @@
 using Bmbox.DAL.Entities;
 using Bmbox.DAL.Repos;
 using bmbox_main.Controllers.Encapsulations;
+using bmbox_main.Helpers;
 using bmbox_main.Models;
 using bmbox_main.Models.Utils;
 using Newtonsoft.Json;
@@ -21,9 +22,19 @@ namespace bmbox_main.Controllers
     public class SignUpInController : Controller
     {
         private AbsRepo<User, int> repo = new UserRepo();
+        private Log log = new Log()
+        {
+            Controller = "SignUpIn"
+        };
+
         // GET: SignInUp
         public ActionResult Index()
         {
+            log.Action = "Index";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            log.User = User.Identity.Name;
+            LogHelper.Info(log);
             return View();
            // return View(repo.GetAll().Select(MapToModel));
         }
@@ -31,26 +42,58 @@ namespace bmbox_main.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Product");
+            log.Action = "Register";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            var user = User.Identity.Name;
+            log.User = user == null || string.IsNullOrEmpty(user)? Constants.LOG_ANONYMOUS : user ;
+            
+            if (User.Identity.IsAuthenticated)
+            {
+                log.Action = log.Action + "\nUser is already authenticated";
+                LogHelper.Error(log);
+                return RedirectToAction("Index", "Product");
+            }
+            LogHelper.Info(log);
             return View();
         }
 
         [HttpPost]
         public ActionResult Register(RegistrationViewModel model)
         {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Product");
+            log.Action = "Register";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_POST;
+            var logUser = User.Identity.Name;
+            log.User = logUser == null || string.IsNullOrEmpty(logUser) ? Constants.LOG_ANONYMOUS : logUser;
+
+           
+            if (User.Identity.IsAuthenticated)
+            {
+                log.Action = log.Action + "\nUser is already authenticated";
+                LogHelper.Error(log);
+                return RedirectToAction("Index", "Product");
+            }
             if (model.Password != model.ConfirmPassword)
             {
+                log.Action = log.Action + "\nInvalid Password";
+                LogHelper.Error(log);
                 ModelState.AddModelError("ConfirmPassword", "Passwords should match");
                 return View(model);
             }
             if (!ModelState.IsValid && !ValidateCaptcha())
+            {
+                log.Action = log.Action + "\nEither model or captcha state is invalid";
+                LogHelper.Error(log);
                 return View(model);
+            }
 
             var user = repo.GetAll().Any(u => u.Email == model.Email);
 
             if(user)
             {
+                log.Action = log.Action + "\nUser with email already exists";
+                LogHelper.Error(log);
                 ModelState.AddModelError("Email", "User with email already exists");
                 return View(model);
             }
@@ -59,6 +102,8 @@ namespace bmbox_main.Controllers
 
             if (emailResult.Equals(Constants.FAIL))
             {
+                log.Action = log.Action + "\nFailed to send email";
+                LogHelper.Error(log);
                 ViewBag.EmailResult = emailResult;
                 return View(model);
             }
@@ -69,17 +114,32 @@ namespace bmbox_main.Controllers
             }
             catch (Exception)
             {
-
+                log.Action = log.Action + "\nFailed to create";
+                LogHelper.Error(log);
                 return View(model);
             }
             ViewBag.EmailResult = emailResult;
+            log.User = model.Email;
+            LogHelper.Info(log);
             return RedirectToAction("Index");
         }
 
 
         public ActionResult Login()
         {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Product");
+            log.Action = "Login";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            var logUser = User.Identity.Name;
+            log.User = logUser == null || string.IsNullOrEmpty(logUser) ? Constants.LOG_ANONYMOUS : logUser;
+
+            if (User.Identity.IsAuthenticated)
+            {
+                log.Action = log.Action + "\nUser is already authenticated";
+                LogHelper.Error(log);
+                return RedirectToAction("Index", "Product");
+            }
+            LogHelper.Info(log);
             return View();
         }
 
@@ -87,39 +147,85 @@ namespace bmbox_main.Controllers
         public ActionResult Login(LoginViewModel login, string url)
         {
             if (!ModelState.IsValid) return View();
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Register");
+            log.Action = "Login";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            var logUser = User.Identity.Name;
+            log.User = logUser == null || string.IsNullOrEmpty(logUser) ? Constants.LOG_ANONYMOUS : logUser;
 
-            var user = repo.GetAll().Where(u => u.Email == login.Email).Select(LogInMapToModel).ToList().First();
-           
-            if (user != null && PasswordIsValid(login.Password, user.Password))
+            if (User.Identity.IsAuthenticated)
             {
-                FormsAuthentication.SetAuthCookie(login.Email, false);
-                if (Url.IsLocalUrl(url) && url.Length > 1 && !String.IsNullOrEmpty(url) && Regex.Match(url, @"/([A-Za-z]+)").Success)
+                log.Action = log.Action + "\nUser is already authenticated";
+                LogHelper.Error(log);
+                return RedirectToAction("Register");
+            }
+
+            try
+            {
+                var user = repo.GetAll().Where(u => u.Email == login.Email).Select(LogInMapToModel).ToList().First();
+
+                if (user != null && PasswordIsValid(login.Password, user.Password))
                 {
-                    return Redirect(url);
+                    FormsAuthentication.SetAuthCookie(login.Email, false);
+                    if (Url.IsLocalUrl(url) && url.Length > 1 && !String.IsNullOrEmpty(url) && Regex.Match(url, @"/([A-Za-z]+)").Success)
+                    {
+                        //log.User = User.Identity.Name;
+                        LogHelper.Info(log);
+                        return Redirect(url);
+                    }
+                    else
+                    {
+                        LogHelper.Info(log);
+                        return RedirectToAction("Index", "Product");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Product");
+                    ModelState.AddModelError("", "Authentication Failed");
+                    return RedirectToAction("Login", "SignUpIn");
                 }
             }
-            else
+            catch (Exception e)
             {
-                ModelState.AddModelError("", "Authentication Failed");
-                return RedirectToAction("Login", "SignUpIn");
+                log.Action = log.Action + "\n" + e;
+                LogHelper.Error(log);
+                throw;
             }
         }
 
         public ActionResult LogOut()
         {
+            log.Action = "LogOut";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            var logUser = User.Identity.Name;
+            log.User = logUser == null || string.IsNullOrEmpty(logUser) ? Constants.LOG_ANONYMOUS : logUser;
+
+            LogHelper.Info(log);
+
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
 
         public ActionResult Delete(int id)
         {
-            repo.Remove(id);
-            return RedirectToAction("Index");
+            log.Action = "Delete";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_GET;
+            log.User = User.Identity.Name;
+
+            try
+            {
+                repo.Remove(id);
+                LogHelper.Info(log);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                log.Action = log.Action + "\n" + e;
+                LogHelper.Error(log);
+                throw;
+            }
         }
 
         private User MapFromModel(RegistrationViewModel model)

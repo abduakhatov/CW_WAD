@@ -17,5 +17,13 @@ namespace bmbox_main.Models.Utils
 
         public static string name_desc = "name_desc";
 
+        public static string LOG_INFO = "info";
+        public static string LOG_ERROR = "error";
+        public static string LOG_METHOD_POST = "POST";
+        public static string LOG_METHOD_GET = "GET";
+
+        public static string LOG_ANONYMOUS = "Anonymous";
+
+
     }
 }
