@@ -166,13 +166,11 @@ namespace bmbox_main.Controllers
                 {
                     var imgPath = Server.MapPath("~/Images/no_image.png").Replace(@"\\", @"\");
                     Image img = Image.FromFile(imgPath);
-                    byte[] arr;
                     using (MemoryStream ms = new MemoryStream())
                     {
                         img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        arr = ms.ToArray();
+                        binaryImage = ms.ToArray();
                     };
-                    binaryImage = arr;
                 }
 
                 m.Image = binaryImage;
@@ -300,6 +298,7 @@ namespace bmbox_main.Controllers
             log.Method = Constants.LOG_METHOD_GET;
             log.User = User.Identity.Name;
             Product res = null;
+
             try
             {
                 LogHelper.Info(log);
@@ -326,6 +325,22 @@ namespace bmbox_main.Controllers
             {
                 try
                 {
+
+                    HttpPostedFileBase file = Request.Files["imageToImport"];
+                    var binaryImage = ConvertToBytes(file);
+                    if (binaryImage == null || binaryImage == new byte[0])
+                    {
+                        var imgPath = Server.MapPath("~/Images/no_image.png").Replace(@"\\", @"\");
+                        Image img = Image.FromFile(imgPath);
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            binaryImage = ms.ToArray();
+                        };
+                    }
+
+                    p.Image = binaryImage;
+
                     repo.Update(MapFromModel(p));
                     LogHelper.Info(log);
                     return RedirectToAction("Index");

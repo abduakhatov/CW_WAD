@@ -2,12 +2,10 @@
 
 @{
     ViewBag.Title = "Details";
-}
-
-@{
     var base64 = Convert.ToBase64String(Model.Image);
     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 }
+
 
 <h2>Details</h2>
 <style>

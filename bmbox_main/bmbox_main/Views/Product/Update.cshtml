@@ -2,16 +2,52 @@
 
 @{
     ViewBag.Title = "Update";
+    var base64 = Convert.ToBase64String(Model.Image);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 }
+<style>
+    img {
+        border: 0;
+        border: 1px solid #eee;
+        margin: 20px 0;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    th {
+        text-align: right;
+        padding-right: 20px;
+        width: 50%;
+    }
+
+    .image {
+        width: 400px;
+        margin-right: 60px;
+    }
+
+    #div {
+        vertical-align: top;
+        width: 50%;
+    }
+
+    #image, #div {
+        display: inline-block;
+        font-size: 19px;
+    }
+</style>
 
 <h2>Update</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Update","Product", FormMethod.Post, new { enctype ="multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+    <div>
+        <img src="@imgSrc" alt="" class="image" id="image" />
+
+        <div class="form-horizontal" id="div">
         <h4>ProductViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -58,17 +94,26 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" class="input-box" id="imageToImport" name="imageToImport" />                
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
+        </div>
     </div>
-}
+    }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
