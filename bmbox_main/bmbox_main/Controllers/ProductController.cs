@@ -1,6 +1,6 @@
 ﻿using bmbox_main.Models;
 using System.Web.Mvc;
-using Bmbox.DAL.Entities;
+using bmbox.DAL.Entities;
 using Bmbox.DAL.Repos;
 using System.Linq;
 using bmbox_main.Utils;
@@ -246,7 +246,7 @@ namespace bmbox_main.Controllers
                             var p = MapFromModel(product);
                             repo.Create(p);
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             ViewBag.Result = "Incorrect file content format in line:\n" + line;
                             return View();
@@ -418,15 +418,21 @@ namespace bmbox_main.Controllers
                     break;
             }
 
-            xDoc.Add(new XElement("Products",
-                                    products.Select(p =>
-                                        new XElement("Product", new XAttribute("Id", p.Id),
-                                            new XElement("Name", p.Name),
-                                            new XElement("Brand", p.Brand),
-                                            new XElement("Type", p.Type),
-                                            new XElement("Image", p.Image),
-                                            new XElement("Cost", p.Cost),
-                                            new XElement("QuantityLeft", p.QuantityLeft)))));
+            try {
+                xDoc.Add(new XElement("Products",
+                                        products.Select(p =>
+                                            new XElement("Product", new XAttribute("Id", p.Id),
+                                                new XElement("Name", p.Name),
+                                                new XElement("Brand", p.Brand),
+                                                new XElement("Type", p.Type),
+                                                new XElement("Cost", p.Cost),
+                                                new XElement("QuantityLeft", p.QuantityLeft)))));
+            } catch (Exception e)
+            {
+                log.Action = log.Action + "\n" + e.ToString();
+                LogHelper.Error(log);
+                throw;
+            }
 
             var schemas = new XmlSchemaSet();
             schemas.Add("", "http://" + System.Web.HttpContext.Current.Request.Url.Authority + "/xml/ProductSchema.xsd");

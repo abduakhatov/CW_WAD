@@ -959,7 +959,9 @@
     <Compile Include="Helpers\Utils\Enums.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
+    <Content Include="Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -985,6 +987,10 @@
     <Folder Include="Views\Parent\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\bmbox.DAL\bmbox.DAL.csproj">
+      <Project>{0a3e29b4-57d7-4d9c-b7b3-b73eff3e6e44}</Project>
+      <Name>bmbox.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Resources\Resources.csproj">
       <Project>{be114f4f-f863-4da4-9649-175249bdc468}</Project>
       <Name>Resources</Name>

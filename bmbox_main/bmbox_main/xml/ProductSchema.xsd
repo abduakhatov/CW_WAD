@@ -28,7 +28,7 @@
      
               <!--if there is no image if the product, it will be empty-->
 
-              <xs:element name="Image" type="xs:string" nillable="true" />
+              <!--<xs:element name="Image" type="xs:string" nillable="true" />-->
                 <!--<xs:simpleType>
                   <xs:union>
                     <xs:simpleType>

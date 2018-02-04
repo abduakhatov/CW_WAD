@@ -7,8 +7,7 @@
     <xsl:text>Id, </xsl:text>
     <xsl:text>Name, </xsl:text>
     <xsl:text>Brand, </xsl:text>
-    <xsl:text>Type,</xsl:text>
-    <xsl:text>Image,</xsl:text>
+    <xsl:text>Type</xsl:text>
     <xsl:text>Cost,</xsl:text>
     <xsl:text>QuantityLeft</xsl:text>
     <xsl:text>&#xa;</xsl:text>
@@ -23,8 +22,6 @@
       <xsl:value-of select="Brand"/>
       <xsl:text>, </xsl:text>
       <xsl:value-of select="Type"/>
-      <xsl:text>, </xsl:text>
-      <xsl:value-of select="Image"/>
       <xsl:text>, </xsl:text>
       <xsl:value-of select="Cost"/>
       <xsl:text>, </xsl:text>

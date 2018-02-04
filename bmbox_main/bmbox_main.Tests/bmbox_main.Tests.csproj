@@ -58,6 +58,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\bmbox.DAL\bmbox.DAL.csproj">
+      <Project>{0a3e29b4-57d7-4d9c-b7b3-b73eff3e6e44}</Project>
+      <Name>bmbox.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\bmbox_main\bmbox_main.csproj">
       <Project>{54130017-8DB2-4117-8DFD-0EA7F1FF7ECA}</Project>
       <Name>bmbox_main</Name>
