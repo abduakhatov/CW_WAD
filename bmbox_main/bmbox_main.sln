@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bmbox_main.Tests", "bmbox_m
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Resources\Resources.csproj", "{BE114F4F-F863-4DA4-9649-175249BDC468}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bmbox.DAL", "Bmbox.DAL\Bmbox.DAL.csproj", "{487430E0-F5BC-4455-9F04-FE0CE3E5EC4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bmbox.DAL", "bmbox.DAL\bmbox.DAL.csproj", "{0A3E29B4-57D7-4D9C-B7B3-B73EFF3E6E44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{BE114F4F-F863-4DA4-9649-175249BDC468}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE114F4F-F863-4DA4-9649-175249BDC468}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE114F4F-F863-4DA4-9649-175249BDC468}.Release|Any CPU.Build.0 = Release|Any CPU
-		{487430E0-F5BC-4455-9F04-FE0CE3E5EC4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{487430E0-F5BC-4455-9F04-FE0CE3E5EC4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{487430E0-F5BC-4455-9F04-FE0CE3E5EC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{487430E0-F5BC-4455-9F04-FE0CE3E5EC4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A3E29B4-57D7-4D9C-B7B3-B73EFF3E6E44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A3E29B4-57D7-4D9C-B7B3-B73EFF3E6E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A3E29B4-57D7-4D9C-B7B3-B73EFF3E6E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A3E29B4-57D7-4D9C-B7B3-B73EFF3E6E44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Bmbox.DAL")]
+[assembly: AssemblyTitle("bmbox.DAL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Bmbox.DAL")]
+[assembly: AssemblyProduct("bmbox.DAL")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("487430e0-f5bc-4455-9f04-fe0ce3e5ec4a")]
+[assembly: Guid("0a3e29b4-57d7-4d9c-b7b3-b73eff3e6e44")]
 
 // Version information for an assembly consists of the following four values:
 //

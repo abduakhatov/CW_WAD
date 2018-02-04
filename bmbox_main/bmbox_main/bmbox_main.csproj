@@ -985,10 +985,6 @@
     <Folder Include="Views\Parent\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bmbox.DAL\Bmbox.DAL.csproj">
-      <Project>{487430e0-f5bc-4455-9f04-fe0ce3e5ec4a}</Project>
-      <Name>Bmbox.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Resources\Resources.csproj">
       <Project>{be114f4f-f863-4da4-9649-175249bdc468}</Project>
       <Name>Resources</Name>
