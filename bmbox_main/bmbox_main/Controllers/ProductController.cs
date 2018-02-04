@@ -12,6 +12,8 @@ using System.IO;
 using System.Xml.Schema;
 using bmbox_main.Helpers;
 using bmbox_main.Models.Utils;
+using System.Web;
+using System.Drawing;
 
 namespace bmbox_main.Controllers
 {
@@ -154,8 +156,26 @@ namespace bmbox_main.Controllers
             log.IPAddress = Request.UserHostAddress.ToString();
             log.Method = Constants.LOG_METHOD_POST;
             log.User = User.Identity.Name;
+
             try
             {
+                HttpPostedFileBase file = Request.Files["imageToImport"];
+                var binaryImage = ConvertToBytes(file);
+                var res = new byte[0];
+                if (binaryImage == null || binaryImage == new byte[0])
+                {
+                    var imgPath = Server.MapPath("~/Images/no_image.png").Replace(@"\\", @"\");
+                    Image img = Image.FromFile(imgPath);
+                    byte[] arr;
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        arr = ms.ToArray();
+                    };
+                    binaryImage = arr;
+                }
+
+                m.Image = binaryImage;
                 var p = MapFromModel(m);
                 repo.Create(p);
                 LogHelper.Info(log);
@@ -168,6 +188,85 @@ namespace bmbox_main.Controllers
                 throw;
             }
         }
+
+        [HttpGet]
+        public ActionResult CreateFromFile()
+        {
+            try
+            {
+                log.Action = "CreateFromFile";
+                log.IPAddress = Request.UserHostAddress.ToString();
+                log.Method = Constants.LOG_METHOD_GET;
+                log.User = User.Identity.Name;
+                LogHelper.Info(log);
+            }
+            catch (Exception e)
+            {
+                log.Action = log.Action + "\n" + e.ToString();
+                LogHelper.Error(log);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateFromFile(FormCollection formCollection)
+        {
+            log.Action = "CreateFromFile";
+            log.IPAddress = Request.UserHostAddress.ToString();
+            log.Method = Constants.LOG_METHOD_POST;
+            log.User = User.Identity.Name;
+
+            var file = Request.Files["fileToImport"];
+            if (file == null)
+            {
+                ViewBag.Result = "File is missing";
+                log.Action = log.Action + "\n File is missing";
+                LogHelper.Error(log);
+            }
+
+            var products = new List<ProductViewModel>();
+            using (var reader = new StreamReader(file.InputStream))
+            {
+                string line;
+                try
+                {
+
+                    while ((line = reader.ReadLine()) != null){
+                        
+                        var product = new ProductViewModel();
+
+                        try
+                        {
+                            var tokens = line.Split('|');
+                            product.Name = tokens[0];
+                            product.Brand = tokens[1];
+                            product.Type = tokens[2];
+                            product.Cost = decimal.Parse(tokens[3]);
+                            product.QuantityLeft = short.Parse(tokens[4]);
+
+                            products.Add(product);
+                            var p = MapFromModel(product);
+                            repo.Create(p);
+                        }
+                        catch (Exception e)
+                        {
+                            ViewBag.Result = "Incorrect file content format in line:\n" + line;
+                            return View();
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    log.Action = log.Action + "\n" + e.ToString();
+                    LogHelper.Error(log);
+                }
+            }
+
+            ViewBag.Products = products;
+            LogHelper.Info(log);
+            return View();
+        }
+
 
         [HttpGet]
         public ActionResult Details(int id)
@@ -367,5 +466,24 @@ namespace bmbox_main.Controllers
                 QuantityLeft = p.QuantityLeft
             };
         }
+
+        private byte[] ConvertToBytes(HttpPostedFileBase image)
+        {
+            byte[] imageBytes = null;
+
+            if (image.ContentLength == 0 && string.IsNullOrEmpty(image.FileName)) return null;
+
+            BinaryReader reader = new BinaryReader(image.InputStream);
+            imageBytes = reader.ReadBytes((int)image.ContentLength);
+            return imageBytes;
+        }
+
+        //private byte[] ConvertFromBytes(byte[] bytes)
+        //{
+        //    HttpPostedFileBase image = null;
+        //    BinaryWriter reader = new BinaryWriter(bytes);
+        //    image = reader.Write(bytes);
+        //    return imageBytes;
+        //}
     }
 }

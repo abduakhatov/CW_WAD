@@ -24,6 +24,8 @@ namespace bmbox_main.Models
         [Required]
         [DataType(DataType.Text)]
         public string Type { get; set; }
+
+        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$", ErrorMessage = "Only Image files allowed.")]
         public byte[] Image { get; set; }
 
         [DisplayName("Price")]

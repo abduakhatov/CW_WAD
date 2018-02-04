@@ -27,8 +27,9 @@
               <xs:element name="Type" type="xs:string"></xs:element>
      
               <!--if there is no image if the product, it will be empty-->
-              <xs:element name="Image">
-                <xs:simpleType>
+
+              <xs:element name="Image" type="xs:string" nillable="true" />
+                <!--<xs:simpleType>
                   <xs:union>
                     <xs:simpleType>
                       <xs:restriction base='xs:string'>
@@ -40,7 +41,7 @@
                     </xs:simpleType>
                   </xs:union>
                 </xs:simpleType>
-              </xs:element>
+              </xs:element>-->
                   <!--cost is decimal wiht min val as 0 exclusive-->
               <xs:element name="Cost">
                 <xs:simpleType>

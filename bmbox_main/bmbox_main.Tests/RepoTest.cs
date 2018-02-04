@@ -175,8 +175,6 @@ namespace bmbox_main.Tests
             Assert.IsTrue(true);
         }
 
-
-
         private ProductViewModel MapToModel(Product p)
         {
             return new ProductViewModel
@@ -190,6 +188,7 @@ namespace bmbox_main.Tests
                 QuantityLeft = p.QuantityLeft
             };
         }
+
 
     }
 }

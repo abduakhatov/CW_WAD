@@ -21,6 +21,6 @@ namespace Bmbox.DAL.Entities
         public string Action { get; set; }
         public string Method { get; set; }
         public string LogType { get; set; }
-        public long Date { get; set; }
+        public Nullable<long> Date { get; set; }
     }
 }

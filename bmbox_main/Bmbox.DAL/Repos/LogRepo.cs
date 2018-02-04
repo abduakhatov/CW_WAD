@@ -9,13 +9,19 @@ namespace Bmbox.DAL.Repos
 {
     public class LogRepo : AbsRepo<Log, int>
     {
+        private static readonly long DatetimeMinTimeTicks =
+      (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Ticks;
+
         public LogRepo() : base()
         {
         }
 
         public override void Create(Log obj)
         {
-            obj.Date = DateTime.Today.Ticks;
+            obj.Date = ToJavaScriptMilliseconds();
+            //UNIX Time = 1300123800000; 
+
+
             try
             {
                 db.Logs.Add(obj);
@@ -46,6 +52,15 @@ namespace Bmbox.DAL.Repos
         public override void Update(Log obj)
         {
             throw new NotImplementedException();
+        }
+
+        private long ToJavaScriptMilliseconds()
+        {
+            var date = DateTime.Now;
+            var dt =  date.ToUniversalTime().Ticks;
+            var dif = dt - DatetimeMinTimeTicks;
+            var res = dif / 10000;
+            return res;
         }
     }
 }

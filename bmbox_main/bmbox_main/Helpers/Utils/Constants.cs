@@ -24,6 +24,5 @@ namespace bmbox_main.Models.Utils
 
         public static string LOG_ANONYMOUS = "Anonymous";
 
-
     }
 }

@@ -4,55 +4,75 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+@{
+    var base64 = Convert.ToBase64String(Model.Image);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
 
+<h2>Details</h2>
+<style>
+    img {
+        border: 0;
+        border: 1px solid #eee;
+        margin: 20px 0;
+    }
+table{
+width: 100%;
+}
+th{
+text-align:right;
+padding-right: 20px;
+width: 50%;
+}
+.image{
+width: 400px;
+margin-right: 60px;
+}
+
+#div {
+    vertical-align: top;
+    width: 50%;
+}
+
+#image, #div{
+    display: inline-block;
+    font-size: 19px;
+}
+</style>
 <div>
     <h4>ProductViewModel</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+    <div>
+        <img src="@imgSrc" alt="" class="image" id="image"/>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Brand)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Brand)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cost)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cost)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.QuantityLeft)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QuantityLeft)
-        </dd>
-
-    </dl>
+        <div id="div">
+            <table class="dl-horizontal" >
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                    <td>@Html.DisplayFor(model => model.Name)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Brand)</th>
+                    <td>@Html.DisplayFor(model => model.Brand)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Type)</th>
+                    <td>@Html.DisplayFor(model => model.Type)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Cost)</th>
+                    <td>@Html.DisplayFor(model => model.Cost)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.QuantityLeft)</th>
+                    <td>@Html.DisplayFor(model => model.QuantityLeft)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
-<p>
+<br><p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

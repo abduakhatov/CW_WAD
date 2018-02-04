@@ -105,10 +105,7 @@
         <td>
             @Html.ActionLink("Add to basket", "AddToBasket", new { pId=item.Id, email = @User.Identity.Name}) |
             @Html.ActionLink("Edit", "Update", new { id=item.Id }) |
-            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
-
-            <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-green w3-large">Login</button> |
-
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
@@ -127,7 +124,7 @@
         </div>
     </div>
 
-                    <div id="id01" class="w3-modal">
+                    @*<div id="id01" class="w3-modal">
                         <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
 
                             <div class="w3-center">
@@ -153,4 +150,4 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div>*@
