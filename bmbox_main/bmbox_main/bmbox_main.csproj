@@ -1024,7 +1024,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Parent\" />
-    <Folder Include="Views\Weather\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bmbox.DAL\bmbox.DAL.csproj">
