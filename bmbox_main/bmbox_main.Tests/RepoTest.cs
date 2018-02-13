@@ -24,7 +24,7 @@ namespace bmbox_main.Tests
         public void Initialize()
         {
             controller = new ProductController();
-           viewResult = controller.Index("name_desc", "P5", "type_desc", 1, "name_desc", "type_desc") as ViewResult;
+           //viewResult = controller.Index("name_desc", "P5", "type_desc", 1, "name_desc", "type_desc") as ViewResult;
             repo = new ProductRepo();
 
             product = new Product
@@ -44,16 +44,6 @@ namespace bmbox_main.Tests
                 Type = "Type Updated",
                 Cost = 0
             };
-        }
-
-        // After product is added without exception, the controller should return to "Index" ctrller
-        [TestMethod]
-        public void ProductCreate()
-        {
-            //var product = viewResult.ViewData.Model;
-            var result = (RedirectToRouteResult) controller.Create(productVM);
-
-            Assert.AreEqual("Index", result.RouteValues["action"]);
         }
 
         // the same as above but checks create product in DAL for exception
@@ -81,28 +71,6 @@ namespace bmbox_main.Tests
             Assert.IsTrue(true);
         }
 
-
-        [TestMethod]
-        public void AssertProductUpdate()
-        { 
-           // var product = viewResult.ViewData.Model;
-            var result = (RedirectToRouteResult)controller.Create(productVM);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-        }
-        // todo
-        [TestMethod]
-        public void AssertProductUpdateException()
-        {
-            try
-            {
-                var result = (RedirectToRouteResult)controller.Create(productVM);
-            }
-            catch (Exception)
-            {
-                Assert.Fail();
-            }
-            Assert.IsTrue(true);
-        }
 
         [TestMethod]
         public void AsserProductSorting()

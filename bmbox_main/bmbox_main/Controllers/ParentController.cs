@@ -11,8 +11,7 @@ namespace bmbox_main.Controllers
     {
         private static readonly List<string> _cultures = new List<string> {
             "en",
-            "ru",
-            "uz" };
+            "ru"};
 
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {

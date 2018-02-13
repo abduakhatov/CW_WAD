@@ -474,7 +474,7 @@ namespace bmbox_main.Controllers
                 QuantityLeft = m.QuantityLeft
             };
         }
-        private ProductViewModel MapToModel(Product p)
+        private ProductViewModel MapToModel(Product p)//, bool rub)
         {
             return new ProductViewModel
             {

@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="bmbox.SOAP.Service1" CodeBehind="Currency.svc.cs" %>

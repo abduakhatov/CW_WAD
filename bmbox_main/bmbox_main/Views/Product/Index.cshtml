@@ -1,12 +1,14 @@
 ﻿@*@model IEnumerable<bmbox_main.Models.ProductViewModel>*@
 @using PagedList.Mvc;
 @using PagedList;
+
 @model PagedList<bmbox_main.Models.ProductViewModel>
 @{
     ViewBag.Title = "All Products";
 }
 
 <h2>Products List</h2>
+<h2>--> @Resources.Global.Register</h2>
 
 <p>
     @Html.ActionLink("Add New", "Create")

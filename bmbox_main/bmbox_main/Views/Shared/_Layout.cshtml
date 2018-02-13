@@ -52,7 +52,7 @@
                                 email= @User.Identity.Name} , new { @class = "navbar-brand"})
                             </li>
                             <li><a>@User.Identity.Name</a></li>
-                            <li>@Html.ActionLink("Log Out", "LogOut", "SignUpIn", null, new { @class = "btn btn-success", @style="color: #fff"})</li>
+                            <li>@Html.ActionLink(@Resources.Global.Logout, "LogOut", "SignUpIn", null, new { @class = "btn btn-success", @style="color: #fff"})</li>
                         }
                         else {
                             <li>@Html.ActionLink("Register", "Register", "SignUpIn", new { area = "" }, new { @class = "navbar-brand btn"}) </li>
