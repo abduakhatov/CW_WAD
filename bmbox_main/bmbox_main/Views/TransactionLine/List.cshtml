@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<bmbox_main.Models.TransactionLineViewModel>
-
+@using Resources;
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = @Res.TransactionLineList;
 }
 
-<h2>List</h2>
+<h2>@Res.TransactionLineList</h2>
 
 <table class="table">
     <tr>
@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.Quantity)
         </th>
         <th>
-            Total
+            @Res.Total
         </th>
 
         <th></th>
@@ -51,19 +51,13 @@
             @Html.DisplayFor(modelItem => item.total)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
-            @Html.ActionLink("Remove from Basket", "Delete", new { transLineId =item.Id, TransId = item.TransactionId})
+            @Html.ActionLink(@Res.Details, "Details", new { id=item.ProductId }) |
+            @Html.ActionLink(@Res.RemoveFromBasket, "Delete", new { transLineId =item.Id, TransId = item.TransactionId})
         </td>
     </tr>
 }
 
 </table>
 <p>
-    @Html.ActionLink("Back to my Baskeyt", "Back", new {email = @User.Identity.Name})
+    @Html.ActionLink(@Res.BackToBasket, "Back", new {email = @User.Identity.Name})
 </p>
-
-@*@section scripts {
-    <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Scripts/ProductController.js"></script>
-    <script src="~/Scripts/Products.js"></script>
-}*@

@@ -35,7 +35,7 @@ namespace bmbox_main.Controllers.v1
                 Brand = p.Brand,
                 Type = p.Type,
                 Image = p.Image,
-                Cost = p.Cost,
+                Cost = (short)p.Cost,
                 QuantityLeft = p.QuantityLeft
             };
         }

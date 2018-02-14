@@ -1,37 +1,24 @@
 ﻿@*@model IEnumerable<bmbox_main.Models.ProductViewModel>*@
 @using PagedList.Mvc;
 @using PagedList;
+@using Resources;
 
 @model PagedList<bmbox_main.Models.ProductViewModel>
 @{
-    ViewBag.Title = "All Products";
+    ViewBag.Title = @Res.AllProducts;
 }
 
-<h2>Products List</h2>
-<h2>--> @Resources.Global.Register</h2>
+<h2>@Res.ProductsList</h2>
 
 <p>
-    @Html.ActionLink("Add New", "Create")
+    @Html.ActionLink(@Res.AddNew, "Create")
 </p>
 
-
-@*@using (Html.BeginForm()) 
-{
-<p>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
-</p>
-}*@
 <div class="form-group">
     @using (Html.BeginForm("Index", "Product", FormMethod.Get))
     {
-        <div> Name </div> @Html.TextBox("nameSearch", ViewBag.currentNameFilter as string)
-        <div class="margin-left:5px"> Category </div>@Html.DropDownList("typeSearch", new SelectList(ViewBag.Categories))
+        <div> @Res.Name </div> @Html.TextBox("nameSearch", ViewBag.currentNameFilter as string)
+        <div class="margin-left:5px"> @Res.Category </div>@Html.DropDownList("typeSearch", new SelectList(ViewBag.Categories))
         <input type="submit" value="Search" />
     }
 </div>
@@ -40,7 +27,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Name", "Index", 
+            @Html.ActionLink(@Res.Name, "Index", 
                 new { sortOrder = ViewBag.NameSortParam
                       , currentNameFilter=ViewBag.CurrentNameFilter
                       , currentTypeFilter=ViewBag.currentTypeFilter})
@@ -54,10 +41,10 @@
             <br>
         </th>
         <th>
-            Brand
+            @Res.Brand
         </th>
         <th>
-            @Html.ActionLink("Category", "Index", new {sortOrder = ViewBag.TypeSortParam
+            @Html.ActionLink(@Res.Category, "Index", new {sortOrder = ViewBag.TypeSortParam
                                        , currentNameFilter=ViewBag.CurrentNameFilter
                                        , currentTypeFilter=ViewBag.currentTypeFilter})
             <a href="#">
@@ -70,7 +57,7 @@
             <br>
         </th>
         <th>
-            @Html.ActionLink("Price", "Index", new {sortOrder = ViewBag.PriceSortParam
+            @Html.ActionLink(@Res.Price, "Index", new {sortOrder = ViewBag.PriceSortParam
                                              , currentNameFilter=ViewBag.CurrentNameFilter
                                              , currentTypeFilter=ViewBag.currentTypeFilter})
             <a href="#">
@@ -82,7 +69,7 @@
             </a>
         </th>
         <th>
-            Quantity Left
+            @Res.LeftOnStock
         </th>
         <th></th>
     </tr>
@@ -105,10 +92,10 @@
             @Html.DisplayFor(modelItem => item.QuantityLeft)
         </td>
         <td>
-            @Html.ActionLink("Add to basket", "AddToBasket", new { pId=item.Id, email = @User.Identity.Name}) |
-            @Html.ActionLink("Edit", "Update", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink(@Res.AddToBasket, "AddToBasket", new { pId=item.Id, email = @User.Identity.Name}) |
+            @Html.ActionLink(@Res.Edit, "Update", new { id=item.Id }) |
+            @Html.ActionLink(@Res.Details, "Details", new { id=item.Id }) |
+            @Html.ActionLink(@Res.Delete, "Delete", new { id=item.Id })
         </td>
     </tr>
 }
@@ -125,31 +112,3 @@
 
         </div>
     </div>
-
-                    @*<div id="id01" class="w3-modal">
-                        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-
-                            <div class="w3-center">
-                                <br>
-                                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close Modal">×</span>
-                                <img src="https://www.w3schools.com/w3css/img_avatar4.png" alt="Avatar" style="width:30%" class="w3-circle w3-margin-top">
-                            </div>
-
-                            <form class="w3-container" action="/action_page.php">
-                                <div class="w3-section">
-                                    <label><b>Username</b></label>
-                                    <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter Username" name="usrname" required>
-                                    <label><b>Password</b></label>
-                                    <input class="w3-input w3-border" type="text" placeholder="Enter Password" name="psw" required>
-                                    <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Login</button>
-                                    <input class="w3-check w3-margin-top" type="checkbox" checked="checked"> Remember me
-                                </div>
-                            </form>
-
-                            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-                                <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
-                                <span class="w3-right w3-padding w3-hide-small">Forgot <a href="#">password?</a></span>
-                            </div>
-
-                        </div>
-                    </div>*@

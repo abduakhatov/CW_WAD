@@ -1,15 +1,16 @@
 ﻿@using bmbox_main.Models;
+@using Resources;
 @{
-    ViewBag.Title = "CreateFromFile";
+    ViewBag.Title = @Res.CreateFromFile;
 }
 
-<h2>Products Import</h2>
+<h2>@Res.ProductsImport</h2>
 
-<br><h4> Product Import Scheme/Template:</h4>
+<br><h4> @Res.Template</h4>
 
-<p style="
+    <p style="
     font-family: Courier New, Courier, monospace;
-    margin-left: 40px;">{Name}|{Brand}|{Type}|{Price}|{Quantity Left}</p>
+    margin-left: 40px;">{@Res.Name}|{@Res.Brand}|{@Res.ProductType}|{@Res.Price}|{@Res.LeftOnStock}</p>
 
 <br><h4> Example: </h4>
 <p style="
@@ -20,14 +21,14 @@
 
 @using(Html.BeginForm("CreateFromFile", "Product", FormMethod.Post, new {enctype = "multipart/form-data"})){
     <input type="file" class="input-box" id="fileToImport" name="fileToImport" />
-    <br><input type="submit" value="Upload" />
+    <br><input type="submit" value="@Res.Upload" />
 }
 
 <br><br>
 <h2>@ViewBag.Result</h2>
 <br>
 <table class="table">
-    <tr><th>Name</th> <th>Brand</th> <th>Type</th> <th>Price</th> <th>Quantity Left</th></tr>
+    <tr><th>@Res.Name</th> <th>@Res.Brand</th> <th>@Res.ProductType</th> <th>@Res.Price</th> <th>@Res.LeftOnStock</th></tr>
             @if(ViewBag.Products != null){
                 var products = ViewBag.Products as List<ProductViewModel>;
                 if(products != null){

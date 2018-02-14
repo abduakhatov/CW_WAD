@@ -5,17 +5,24 @@ using bmbox_main.Models;
 using bmbox_main.Models.Utils;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace bmbox_main.Controllers
 {
     [Authorize]
-    public class TransactionLineController : Controller
+    public class TransactionLineController : ParentController
     {
         AbsRepo<TransactionLine, int> repo = new TransactionLineRepo();
         private Log log = new Log()
         {
             Controller = "TransactionLine"
         };
+
+
+        public void InitializeController(RequestContext context)
+        {
+            base.Initialize(context);
+        }
 
         // GET: TransactionLine
         public ActionResult Index(int id)
@@ -43,6 +50,7 @@ namespace bmbox_main.Controllers
         {
             log.Action = "Index";
             log.IPAddress = Request.UserHostAddress.ToString();
+            //log.IPAddress = ViewBag.IP;
             log.Method = Constants.LOG_METHOD_GET;
             log.User = User.Identity.Name;
            

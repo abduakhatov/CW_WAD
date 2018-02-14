@@ -7,14 +7,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.Security;
 
 namespace bmbox_main.Controllers
 {
     [Authorize]
-    public class TransactionController : Controller
+    public class TransactionController : ParentController
     {
         private AbsRepo<Transaction, string> repo = new TransactionRepo();
+
+        public void InitializeController(RequestContext context)
+        {
+            base.Initialize(context);
+        }
+
         // GET: Transaction
         public ActionResult Index(string email)
         {
@@ -53,7 +60,9 @@ namespace bmbox_main.Controllers
                 var tId = user.First().Id;
 
                 short quantity = 1;
-                new TransactionLineController().Create(pId, quantity, tId);
+                TransactionLineController tc = new TransactionLineController();
+                tc.InitializeController(this.Request.RequestContext);
+                tc.Create(pId, quantity, tId);
             }
             catch
             {

@@ -1,7 +1,7 @@
 ﻿@model bmbox_main.Models.ProductViewModel
-
+@using Resources;
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = @Res.Details;
     var base64 = Convert.ToBase64String(Model.Image);
     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 }
@@ -38,7 +38,7 @@ margin-right: 60px;
 }
 </style>
 <div>
-    <h4>ProductViewModel</h4>
+    <h4>@Res.Details</h4>
     <hr />
 
     <div>
@@ -71,6 +71,6 @@ margin-right: 60px;
     </div>
 </div>
 <br><p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(@Res.Edit, "Edit", new { id = Model.Id }) |
+    @Html.ActionLink(@Res.BackToList, "Index")
 </p>

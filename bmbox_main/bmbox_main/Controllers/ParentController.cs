@@ -33,7 +33,7 @@ namespace bmbox_main.Controllers
                 Response.RedirectToRoute(RouteData.Values);
             }
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
             return base.BeginExecuteCore(callback, state);
         }
     }

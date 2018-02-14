@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - BmBox</title>
     
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -12,7 +12,8 @@
     @RenderSection("scripts", required: false)
 </head>
 <body>
-    @using System.Web.Security
+    @using System.Web.Security;
+    @using Resources;
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header" style="width: 50%;">
@@ -24,7 +25,7 @@
 
                 <div class="navbar-left">
                     <ul class="nav navbar-nav">
-                        <li> @Html.ActionLink("All Products", "Index", "Product", new { area = "" }, new { @class = "navbar-brand" }) </li>
+                        <li> @Html.ActionLink(Res.AllProducts, "Index", "Product", new { area = "" }, new { @class = "navbar-brand" }) </li>
 
                         <li>
                             @Html.ActionLink("XML", "ConvertToXml", "Product" , new { @class = "navbar-brand"})
@@ -39,7 +40,7 @@
             </div>
             <ul class="nav navbar-nav">
                 <li>
-                    @Html.ActionLink("Logs", "Index", "Log", new {} , new { @class = "navbar-brand"})
+                    @Html.ActionLink(@Res.Logs, "Index", "Log", new {} , new { @class = "navbar-brand"})
                 </li>
             </ul>
                 <ul class="nav navbar-nav" style="float: right"></ul>
@@ -48,16 +49,16 @@
                     <ul class="nav navbar-nav">
                         @if (User.Identity.IsAuthenticated) {
                             <li>
-                                @Html.ActionLink("My Basket", "Index", "Transaction", new {
+                                @Html.ActionLink(@Res.MyBasket, "Index", "Transaction", new {
                                 email= @User.Identity.Name} , new { @class = "navbar-brand"})
                             </li>
                             <li><a>@User.Identity.Name</a></li>
-                            <li>@Html.ActionLink(@Resources.Global.Logout, "LogOut", "SignUpIn", null, new { @class = "btn btn-success", @style="color: #fff"})</li>
+                            <li>@Html.ActionLink(@Res.Logout, "LogOut", "SignUpIn", null, new { @class = "btn btn-success", @style="color: #fff"})</li>
                         }
                         else {
-                            <li>@Html.ActionLink("Register", "Register", "SignUpIn", new { area = "" }, new { @class = "navbar-brand btn"}) </li>
+                            <li>@Html.ActionLink(@Res.Register, "Register", "SignUpIn", new { area = "" }, new { @class = "navbar-brand btn"}) </li>
 
-                            <li>@Html.ActionLink("Log in", "Login", "SignUpIn", null, new { @class = "btn btn-success", @style="color: #fff"})</li>
+                            <li>@Html.ActionLink(@Res.Login, "Login", "SignUpIn", null, new { @class = "btn btn-success", @style="color: #fff"})</li>
                         }
                         </ul>
                     </div>
@@ -70,7 +71,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - BmBox</p>
         </footer>
     </div>
 

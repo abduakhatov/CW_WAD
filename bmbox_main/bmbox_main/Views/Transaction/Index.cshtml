@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<bmbox_main.Models.TransactionViewModel>
-
+@using Resources;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = @Res.MyBasket;
 }
 
-<h2>Index</h2>
+<h2>@Res.MyBasket</h2>
 <style type="text/css">
     .Processed {
         background-color: rgba(0,255,0,0.05);
@@ -34,9 +34,9 @@
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.ActionLink("Process this basket", "Edit", new { id=item.Id, email = @User.Identity.Name }) |
-            @Html.ActionLink("Details", "List", new { id=item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id, email = @User.Identity.Name })
+            @Html.ActionLink(@Res.ProcessBasket, "Edit", new { id=item.Id, email = @User.Identity.Name }) |
+            @Html.ActionLink(@Res.Details, "List", new { id=item.Id}) |
+            @Html.ActionLink(@Res.Delete, "Delete", new { id=item.Id, email = @User.Identity.Name })
         </td>
     </tr>
 

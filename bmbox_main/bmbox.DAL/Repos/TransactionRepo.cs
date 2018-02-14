@@ -28,7 +28,7 @@ namespace Bmbox.DAL.Repos
                 if (statusL.Count() > 0 && statusL != null)
                     status = statusL.First().Status ?? true;
 
-                if (user != null && user.Count() > 0 && !status) return;
+                if (user != null && user.Count() > 0 && status == false) return;
 
                 db.Transactions.Add(obj);
                 db.SaveChanges();

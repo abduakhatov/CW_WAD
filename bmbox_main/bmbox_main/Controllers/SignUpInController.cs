@@ -19,7 +19,8 @@ using System.Web.Security;
 
 namespace bmbox_main.Controllers
 {
-    public class SignUpInController : Controller
+    [AllowAnonymous]
+    public class SignUpInController : ParentController
     {
         private AbsRepo<User, int> repo = new UserRepo();
         private Log log = new Log()
@@ -124,7 +125,7 @@ namespace bmbox_main.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [AllowAnonymous]
         public ActionResult Login()
         {
             log.Action = "Login";

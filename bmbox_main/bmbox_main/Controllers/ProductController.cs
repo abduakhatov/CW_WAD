@@ -239,7 +239,7 @@ namespace bmbox_main.Controllers
                             product.Name = tokens[0];
                             product.Brand = tokens[1];
                             product.Type = tokens[2];
-                            product.Cost = decimal.Parse(tokens[3]);
+                            product.Cost = short.Parse(tokens[3]);
                             product.QuantityLeft = short.Parse(tokens[4]);
 
                             products.Add(product);
@@ -387,6 +387,7 @@ namespace bmbox_main.Controllers
             try
             {
                 TransactionController tc = new TransactionController();
+                tc.InitializeController(this.Request.RequestContext);
                 tc.Create(pId, email);
                 LogHelper.Info(log);
                 return RedirectToAction("Index");
@@ -470,7 +471,7 @@ namespace bmbox_main.Controllers
                 Brand = m.Brand,
                 Type = m.Type,
                 Image = m.Image,
-                Cost = m.Cost,
+                Cost = (decimal)m.Cost,
                 QuantityLeft = m.QuantityLeft
             };
         }
@@ -483,7 +484,7 @@ namespace bmbox_main.Controllers
                 Brand = p.Brand,
                 Type = p.Type,
                 Image = p.Image,
-                Cost = p.Cost,
+                Cost = (short)p.Cost,
                 QuantityLeft = p.QuantityLeft
             };
         }
