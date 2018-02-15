@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div ng-app="logsApp" ng-controller="logsCtrl">
+    <table class="table">
+        <tr>
+            <th>
+                Action Date
+            </th>
+            <th>
+                User
+            </th>
+            <th>
+                IP Address
+            </th>
+            <th>
+                Controller
+            </th>
+            <th>
+                Action
+            </th>
+            <th>
+                Method
+            </th>
+            <th>
+                Log Message
+            </th>
+        </tr>
+
+        <tr ng-repeat="log in logs">
+            <td>{{log.Date|date:'dd/MM/yyyy - HH:mm'}}</td>
+            <td>{{log.User}}</td>
+            <td>{{log.IPAddress}}</td>
+            <td>{{log.Controller}}</td>
+            <td>{{log.Action}}</td>
+            <td>{{log.Method}}</td>
+            <td>{{log.LogType}}</td>
+        </tr>
+
+
+    </table>
+</div>
+
+    @section scripts{
+<script src="~/Scripts/angular.min.js"></script>
+
+<script>
+        var app = angular.module('logsApp', []);
+        app.controller('logsCtrl', function ($scope, $http) {
+            $http.get("/api/Log/GetLogs")
+                       .then(function (result) {
+                           $scope.logs = result.data;
+                       });
+        });
+</script>
+    }
+
+
