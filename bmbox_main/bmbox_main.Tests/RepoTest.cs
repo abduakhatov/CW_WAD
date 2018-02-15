@@ -152,7 +152,7 @@ namespace bmbox_main.Tests
                 Brand = p.Brand,
                 Type = p.Type,
                 Image = p.Image,
-                Cost = p.Cost,
+                Cost = (short)p.Cost,
                 QuantityLeft = p.QuantityLeft
             };
         }

@@ -13,42 +13,43 @@ namespace bmbox_main.Controllers.v1
     {
         private AbsRepo<User, int> repo = new UserRepo();
 
+        [HttpGet]
         public bool UserExists(string email)
         {
             return repo.GetAll().Any(u => u.Email == email);
 
         }
 
-        //public bool EmailExists(string email)
+        ////public bool EmailExists(string email)
+        ////{
+        ////    var res = new EmailValidationWS.ValidateEmailSoapClient().IsValidEmail(email);
+
+        ////    return res;
+        ////}
+
+        //public string ConvertToRub(string r)
         //{
-        //    var res = new EmailValidationWS.ValidateEmailSoapClient().IsValidEmail(email);
+        //    CurrencyConversionWS.CurrencyConvertorSoap objWS = new CurrencyConversionWS.CurrencyConvertorSoapClient();
+        //    double usdToinr = objWS.ConversionRate(CurrencyConversionWS.Currency.USD, CurrencyConversionWS.Currency.INR);
+        //    double totalAmount = usdToinr * Double.Parse(r);
+        //    return totalAmount.ToString();
 
-        //    return res;
+
         //}
-
-        public string ConvertToRub(string r)
-        {
-            CurrencyConversionWS.CurrencyConvertorSoap objWS = new CurrencyConversionWS.CurrencyConvertorSoapClient();
-            double usdToinr = objWS.ConversionRate(CurrencyConversionWS.Currency.USD, CurrencyConversionWS.Currency.INR);
-            double totalAmount = usdToinr * Double.Parse(r);
-            return totalAmount.ToString();
-
-
-        }
 
 
        
-        public string ConvertToRub2()
-        {
-            CurService.CurrencyConvertorSoapClient client = new CurService.CurrencyConvertorSoapClient();
-            String from = "USD";
-            String to = "RUB";
-            double convValue = client.ConversionRate((CurService.Currency)Enum.Parse(typeof(CurService.Currency), from),
-                               (CurService.Currency)Enum.Parse(typeof(CurService.Currency), to));
+        //public string ConvertToRub2()
+        //{
+        //    CurService.CurrencyConvertorSoapClient client = new CurService.CurrencyConvertorSoapClient();
+        //    String from = "USD";
+        //    String to = "RUB";
+        //    double convValue = client.ConversionRate((CurService.Currency)Enum.Parse(typeof(CurService.Currency), from),
+        //                       (CurService.Currency)Enum.Parse(typeof(CurService.Currency), to));
 
-            return convValue.ToString();
+        //    return convValue.ToString();
 
-        }
+        //}
 
 
     }

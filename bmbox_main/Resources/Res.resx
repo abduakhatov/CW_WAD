@@ -243,4 +243,7 @@
   <data name="UserEmail" xml:space="preserve">
     <value>User Email</value>
   </data>
+  <data name="EmailCheck" xml:space="preserve">
+    <value>Email sent successfully, please check spam folder</value>
+  </data>
 </root>

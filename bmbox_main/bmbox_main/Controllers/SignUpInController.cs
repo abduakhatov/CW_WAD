@@ -16,6 +16,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
+using Resources;
 
 namespace bmbox_main.Controllers
 {
@@ -119,10 +120,11 @@ namespace bmbox_main.Controllers
                 LogHelper.Error(log);
                 return View(model);
             }
-            ViewBag.EmailResult = emailResult;
+            ViewBag.EmailResult = @Res.EmailCheck;
+        
             log.User = model.Email;
             LogHelper.Info(log);
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
         }
 
         [AllowAnonymous]

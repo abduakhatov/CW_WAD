@@ -61,6 +61,17 @@
                             <li>@Html.ActionLink(@Res.Login, "Login", "SignUpIn", null, new { @class = "btn btn-success", @style="color: #fff"})</li>
                         }
                         </ul>
+                        @*@using (Html.BeginForm("Register", "SignUpIn"))
+                        {
+                        <p>
+                            @Resource.SelectLanguage : @Html.DropDownList("ddlCulture", new SelectList(new[]
+                            {
+                                new{value="en",text=Resource.English},
+                                new{value="uz",text=Resource.Uzbek},
+                                new{value="ru",text=Resource.Russian}
+                            }, "value", "text", Session["CurrentCulture"]), new { onchange = "this.form.submit();" })
+                        </p>
+                        }*@
                     </div>
                 
 

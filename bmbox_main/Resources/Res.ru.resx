@@ -243,4 +243,7 @@
   <data name="UserEmail" xml:space="preserve">
     <value>Pochta polzovatelya</value>
   </data>
+  <data name="EmailCheck" xml:space="preserve">
+    <value>Email otpravlen, pojaluysta proverte papku spam</value>
+  </data>
 </root>

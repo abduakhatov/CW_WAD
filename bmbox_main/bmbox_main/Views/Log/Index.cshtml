@@ -5,6 +5,8 @@
 <h2>Index</h2>
 
 <div ng-app="logsApp" ng-controller="logsCtrl">
+    <p>
+    Current Location: {{geo}}</p>
     <table class="table">
         <tr>
             <th>
@@ -53,7 +55,11 @@
             $http.get("/api/Log/GetLogs")
                        .then(function (result) {
                            $scope.logs = result.data;
-                       });
+                });
+            $http.get("/api/Log/GetLocation")
+                .then(function (pos) {
+                    $scope.geo = pos.data;
+                });
         });
 </script>
     }

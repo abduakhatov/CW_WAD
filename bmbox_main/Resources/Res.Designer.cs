@@ -196,6 +196,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email sent successfully, please check spam folder.
+        /// </summary>
+        public static string EmailCheck {
+            get {
+                return ResourceManager.GetString("EmailCheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First Name.
         /// </summary>
         public static string FirstName {
